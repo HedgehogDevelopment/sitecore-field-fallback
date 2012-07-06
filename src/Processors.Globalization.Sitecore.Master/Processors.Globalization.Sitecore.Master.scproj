@@ -1,0 +1,140 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{01a8ff8e-f0dd-4354-9be8-17aa1aa208bb}</ProjectGuid>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <SourceWebPhysicalPath>..\Processors.Globalization</SourceWebPhysicalPath>
+    <SourceWebProject>{c7f2cf0e-b4b3-4fd4-b226-b0862181d01f}|Processors.Globalization\Processors.Globalization.csproj</SourceWebProject>
+    <SourceWebVirtualPath>/Processors.Globalization.csproj</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <SingleAssemblyName>Processors.Globalization.Sitecore.Master</SingleAssemblyName>
+    <UseWebConfigReplacement>false</UseWebConfigReplacement>
+    <DeleteAppCodeCompiledFiles>true</DeleteAppCodeCompiledFiles>
+    <LegacyFileReplacement>false</LegacyFileReplacement>
+    <AssemblyName>Processors.Globalization.Sitecore.Master</AssemblyName>
+    <Name>Processors.Globalization.Sitecore.Master</Name>
+    <RootNamespace>Processors.Globalization.Sitecore.Master</RootNamespace>
+    <SccProjectName>
+    </SccProjectName>
+    <SccProvider>
+    </SccProvider>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SitecoreDatabase>master</SitecoreDatabase>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <SitecoreDeployFolder>
+    </SitecoreDeployFolder>
+    <SitecoreWebUrl>
+    </SitecoreWebUrl>
+    <SitecoreAccessGuid>
+    </SitecoreAccessGuid>
+    <InstallSitecoreConnector>False</InstallSitecoreConnector>
+    <PackageAuthor>Hedgehog Development</PackageAuthor>
+    <PackagePublisher>Hedgehog Development</PackagePublisher>
+    <PackageVersion>1.0</PackageVersion>
+    <PackageReadme>Field Fallback Module - Processors.Globalization
+http://trac.sitecore.net/FieldFallback
+
+This package was generated with Team Development for Sitecore.
+http://TeamDevelopmentForSitecore.com</PackageReadme>
+    <SitecoreAssemblyPath>..\..\lib</SitecoreAssemblyPath>
+    <GeneratePackage>True</GeneratePackage>
+    <SeperateFilesAndItems>False</SeperateFilesAndItems>
+    <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <SitecoreItem Include="sitecore\templates.item">
+      <Icon>/temp/IconCache/Applications/16x16/form_blue.png</Icon>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder_gear.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Language.item">
+      <Icon>/temp/IconCache/People/16x16/flag_red.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Language\Fallback.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Language\Fallback\FallbackLanguage.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Template field.item">
+      <Icon>/temp/IconCache/Applications/16x16/form_blue.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Template field\Fallback.item">
+      <Icon>/temp/IconCache/Applications/32x32/undo.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Template field\Fallback\EnableLanguageFallback.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+  </ItemGroup>
+  <ItemGroup>
+    <ExcludedAssemblies Include="FieldFallback.Kernel.%2a" />
+    <ExcludedAssemblies Include="HtmlAgilityPack.dll" />
+    <ExcludedAssemblies Include="Lucene.Net.dll" />
+    <ExcludedAssemblies Include="Sitecore.%2a.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
+    <!-- After the package is generated, copy it up to the /trunk/release directory -->
+    <Target Name="AfterGeneratePackage" Condition=" '$(Configuration)' == 'Release' ">
+        <PropertyGroup>
+            <!-- calculate the package directory-->
+            <_PackageOutputDirectory Condition="'$(OutDir)' != '$(OutputPath)' and '$(OutDir)' != ''">$(OutDir)_Packages\$(MSBuildProjectName)\</_PackageOutputDirectory>
+            <_PackageOutputDirectory Condition="'$(OutDir)' == '$(OutputPath)' or '$(OutDir)' == ''">$(OutputPath)..\Package_$(Configuration)\</_PackageOutputDirectory>
+            <_CopyPath>..\..\release</_CopyPath>
+        </PropertyGroup>
+        <!-- Grab the packages -->
+        <ItemGroup>
+            <_OutputFiles Include="$(_PackageOutputDirectory)\**\*.*" />
+        </ItemGroup>
+        <!-- write a message to output window -->
+        <Message Text="Copying package from $(_PackageOutputDirectory) to $(_CopyPath)" Importance="high" />
+        <!-- perform the copy -->
+        <Copy SourceFiles="@(_OutputFiles)" DestinationFiles="@(_OutputFiles -> '$(_CopyPath)\%(RecursiveDir)\%(FileName)%(Extension)')" />
+    </Target>
+</Project>

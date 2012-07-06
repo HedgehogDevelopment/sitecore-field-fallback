@@ -1,0 +1,18 @@
+----item----
+version: 1
+id: {207B1F0D-FCF2-4F86-B270-A20FD012CEB8}
+database: master
+path: /sitecore/system/Settings/Validation Rules/Field Rules
+parent: {B3031702-6BFF-4061-B92D-291E9EC865D5}
+name: Field Rules
+master: {00000000-0000-0000-0000-000000000000}
+template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
+templatekey: Folder
+
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 38
+
+{8F8E2549-C77F-4860-B83B-54FA31E2BEFA}

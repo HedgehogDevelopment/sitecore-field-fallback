@@ -1,0 +1,25 @@
+----item----
+version: 1
+id: {087E1EA5-6280-4575-9E70-85B588DB91B2}
+database: master
+path: /sitecore/system/Settings
+parent: {13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}
+name: Settings
+master: {00000000-0000-0000-0000-000000000000}
+template: {239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}
+templatekey: Node
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 34
+
+Applications/16x16/preferences.png
+----field----
+field: {9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}
+name: __Read Only
+key: __read only
+content-length: 1
+
+1
