@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {A25368ED-590C-4F31-9063-96DA9776DD63}
+database: master
+path: /sitecore/content/FieldFallbackDemo/LateralDemos/LateralDemo2
+parent: {64A65A1F-0F41-44CE-BD92-6929B89D0F20}
+name: LateralDemo2
+master: {00000000-0000-0000-0000-000000000000}
+template: {9F51ABA4-EC7D-4761-A4C4-714D00410B7E}
+templatekey: LateralDemo
+
+----version----
+language: en
+version: 1
+revision: 17e390e8-b66e-4f76-af12-32bb4488bd4d
+
+----field----
+field: {31BB855D-DFBA-4FBB-9E5B-1EA3AC098CF4}
+name: SourceField2
+key: sourcefield2
+content-length: 20
+
+Source Field 2 Value
+----field----
+field: {1EDFEFF5-23BD-4DD1-8F93-40C7B8E8F7C4}
+name: Note
+key: note
+content-length: 275
+
+The value of "Fallback Fields" for this item is coming from the Standard Values. It is configured to use the first value found in SourceField1 or SourceField2. In this case, there is not a value in SourceField1, but there is in SourceField2, and that is used for TargetField.
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20120709T095900
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+17e390e8-b66e-4f76-af12-32bb4488bd4d
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120709T100436:634774250768579840
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

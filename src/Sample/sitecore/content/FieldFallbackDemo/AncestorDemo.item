@@ -1,0 +1,51 @@
+----item----
+version: 1
+id: {812E7F6A-2E41-413C-A0CD-282AB4CDA8FA}
+database: master
+path: /sitecore/content/FieldFallbackDemo/AncestorDemo
+parent: {1C980364-5C74-4CDD-9C08-E718672C8ED5}
+name: AncestorDemo
+master: {00000000-0000-0000-0000-000000000000}
+template: {7D1CDD40-F39F-4619-82BA-B97BF6CCB119}
+templatekey: AncestorDemo
+
+----version----
+language: en
+version: 1
+revision: 1d39265e-1f1c-4557-b91c-368ac8d3402b
+
+----field----
+field: {C84273B1-C9E2-4F86-A2C1-7C695DFE4F35}
+name: DemoEmptyField
+key: demoemptyfield
+content-length: 60
+
+Value set @ /sitecore/content/FieldFallbackDemo/AncestorDemo
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20120709T093948
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+1d39265e-1f1c-4557-b91c-368ac8d3402b
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120709T094119:634774236796650837
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

@@ -1,0 +1,51 @@
+----item----
+version: 1
+id: {4BEEDB77-2B13-4FEF-9940-2BA005024C3C}
+database: master
+path: /sitecore/content/FieldFallbackDemo/AncestorDemo/SetEmptyField1
+parent: {812E7F6A-2E41-413C-A0CD-282AB4CDA8FA}
+name: SetEmptyField1
+master: {00000000-0000-0000-0000-000000000000}
+template: {7D1CDD40-F39F-4619-82BA-B97BF6CCB119}
+templatekey: AncestorDemo
+
+----version----
+language: en
+version: 1
+revision: 04f8a015-cfce-4cbc-bc8c-7fedc6e981dd
+
+----field----
+field: {C84273B1-C9E2-4F86-A2C1-7C695DFE4F35}
+name: DemoEmptyField
+key: demoemptyfield
+content-length: 75
+
+Value set @ /sitecore/content/FieldFallbackDemo/AncestorDemo/SetEmptyField1
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20120709T094054
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+04f8a015-cfce-4cbc-bc8c-7fedc6e981dd
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120709T094627:634774239875882796
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
