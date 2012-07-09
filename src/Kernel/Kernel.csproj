@@ -80,7 +80,7 @@
     <Compile Include="Validators\FallbackValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\FieldFallback_00.config" />
+    <Content Include="App_Config\Include\FieldFallback_00.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
