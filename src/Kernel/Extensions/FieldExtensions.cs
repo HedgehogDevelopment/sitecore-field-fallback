@@ -14,6 +14,21 @@ namespace FieldFallback
         }
 
         /// <summary>
+        /// The proper way to check if a field has the standard value when fallback is instaled.
+        /// It is also the safe way to call Field.ContainsStandardValue that gets around Sitecore bug #368493
+        /// </summary>
+        /// <param name="field">The field.</param>
+        /// <returns>
+        ///   <c>true</c> if [has value safe] [the specified field]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool ContainsStandardValueSafe(this Field field)
+        {
+            // safely call Field.GetValue with fallback disabled
+         //   FixContainsStandardValue(field);
+            return field.ContainsStandardValue;
+        }
+
+        /// <summary>
         /// A safe way to call Field.HasValue that gets around Sitecore bug #368493
         /// </summary>
         /// <param name="field">The field.</param>

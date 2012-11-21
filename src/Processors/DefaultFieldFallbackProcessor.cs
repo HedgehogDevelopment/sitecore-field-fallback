@@ -8,13 +8,13 @@ namespace FieldFallback.Processors
 {
     public class DefaultFieldFallbackProcessor : FieldFallbackProcessor
     {
-        public override bool IsEnabledForField(Field field)
+        protected override bool IsEnabledForField(Field field)
         {
             TemplateFallbackFieldItem fallbackField = field;
             return (fallbackField != null && fallbackField.EnableDefaultValueFallback);
         }
 
-        public override string GetFallbackValue(FieldFallbackPipelineArgs args)
+        protected override string GetFallbackValue(FieldFallbackPipelineArgs args)
         {
             Assert.IsNotNull(args.Field, "Field is null");
             TemplateFallbackFieldItem fallbackField = args.Field;
@@ -24,12 +24,6 @@ namespace FieldFallback.Processors
             if (masterVariablesReplacer != null)
             {
                 resultText = masterVariablesReplacer.Replace(resultText, args.Field.Item);
-
-                if (resultText != null)
-                {
-                    // we found our value, don't execute any other processors.
-                    args.AbortPipeline();
-                }
             }
             return resultText;
 

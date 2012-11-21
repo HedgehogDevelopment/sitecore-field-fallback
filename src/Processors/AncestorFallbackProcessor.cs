@@ -10,13 +10,13 @@ namespace FieldFallback.Processors
 {
     public class AncestorFallbackProcessor : FieldFallbackProcessor
     {
-        public override bool IsEnabledForField(Field field)
+        protected override bool IsEnabledForField(Field field)
         {
             TemplateFallbackFieldItem fallbackField = field;
             return (fallbackField != null && fallbackField.EnableAncestorFallback);
         }
 
-        public override string GetFallbackValue(FieldFallbackPipelineArgs args)
+        protected override string GetFallbackValue(FieldFallbackPipelineArgs args)
         {
             Assert.IsNotNull(args.Field, "Field is null");
             Item fallbackItem = GetFallbackItem(args.Field);
@@ -24,9 +24,6 @@ namespace FieldFallback.Processors
             // if we have an ancestor with the field...
             if (fallbackItem != null && fallbackItem.Fields[args.Field.ID] != null)
             {
-                // we found our value, don't execute any other processors.
-                args.AbortPipeline();
-
                 // get the value of the ancestor item.
                 // Standard Values are an acceptable value!
                 return fallbackItem.Fields[args.Field.ID].GetValueSafe(true, false, false);

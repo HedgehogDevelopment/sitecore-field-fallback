@@ -7,7 +7,7 @@ namespace FieldFallback.Processors
 {
     public class LateralFieldFallbackProcessor : FieldFallbackProcessor
     {
-        public override bool IsEnabledForField(Field field)
+        protected override bool IsEnabledForField(Field field)
         {
             if (field.ID == FallbackItem.FallbackFields)
             {
@@ -18,7 +18,7 @@ namespace FieldFallback.Processors
             return item.DoesFieldHaveLateralFallback(field);
         }
 
-        public override string GetFallbackValue(FieldFallbackPipelineArgs args)
+        protected override string GetFallbackValue(FieldFallbackPipelineArgs args)
         {
             Assert.IsNotNull(args.Field, "Field is null");
             FallbackItem item = args.Field.Item;
@@ -31,9 +31,6 @@ namespace FieldFallback.Processors
                 string val = f.GetValueSafe(true, false, false);
                 if (val != null)
                 {
-                    // we found our value, don't execute any other processors.
-                    args.AbortPipeline();
-
                     return val;
                 }
             }

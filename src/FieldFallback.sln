@@ -1,5 +1,9 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. General Fallback", "02. General Fallback", "{2B3D124A-AB61-411E-B2A0-AACB4BBDB224}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Language Fallback", "03. Language Fallback", "{331B2DC2-D515-42EB-9FD9-D2C7A3CB9658}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kernel", "Kernel\Kernel.csproj", "{CB4962D4-F135-408D-930B-E508F0E79EA2}"
 EndProject
 Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Processors.Sitecore.Master", "Processors.Sitecore.Master\Processors.Sitecore.Master.scproj", "{AC10CCFB-EE9D-45AA-A1DF-F485D0FA59B5}"
@@ -10,13 +14,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Processors.Globalization", 
 EndProject
 Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Processors.Globalization.Sitecore.Master", "Processors.Globalization.Sitecore.Master\Processors.Globalization.Sitecore.Master.scproj", "{01A8FF8E-F0DD-4354-9BE8-17AA1AA208BB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "General Fallback", "General Fallback", "{2B3D124A-AB61-411E-B2A0-AACB4BBDB224}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Language Fallback", "Language Fallback", "{331B2DC2-D515-42EB-9FD9-D2C7A3CB9658}"
-EndProject
 Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Kernel.Sitecore.Master", "Kernel.Sitecore.Master\Kernel.Sitecore.Master.scproj", "{219E8827-FEED-4E49-8B84-4A59FC7222B2}"
 EndProject
 Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Sample", "Sample\Sample.scproj", "{92D0726A-D10A-4B6C-A98B-404A2EE88BCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00. Solution Files", "00. Solution Files", "{4EAA7A81-64F4-4CEB-AF25-D6DB3D6D1277}"
+	ProjectSection(SolutionItems) = preProject
+		CommonAssemblyInfo.cs = CommonAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Kernel", "01. Kernel", "{E46230F7-8EC4-4396-A551-0ADDFBB8126A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,9 +68,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{EA0E220B-26C7-454E-883F-40ACBDC53BF4} = {2B3D124A-AB61-411E-B2A0-AACB4BBDB224}
 		{AC10CCFB-EE9D-45AA-A1DF-F485D0FA59B5} = {2B3D124A-AB61-411E-B2A0-AACB4BBDB224}
-		{01A8FF8E-F0DD-4354-9BE8-17AA1AA208BB} = {331B2DC2-D515-42EB-9FD9-D2C7A3CB9658}
+		{EA0E220B-26C7-454E-883F-40ACBDC53BF4} = {2B3D124A-AB61-411E-B2A0-AACB4BBDB224}
 		{C7F2CF0E-B4B3-4FD4-B226-B0862181D01F} = {331B2DC2-D515-42EB-9FD9-D2C7A3CB9658}
+		{01A8FF8E-F0DD-4354-9BE8-17AA1AA208BB} = {331B2DC2-D515-42EB-9FD9-D2C7A3CB9658}
+		{CB4962D4-F135-408D-930B-E508F0E79EA2} = {E46230F7-8EC4-4396-A551-0ADDFBB8126A}
+		{219E8827-FEED-4E49-8B84-4A59FC7222B2} = {E46230F7-8EC4-4396-A551-0ADDFBB8126A}
 	EndGlobalSection
 EndGlobal

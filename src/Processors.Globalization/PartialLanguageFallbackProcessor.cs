@@ -11,13 +11,13 @@ namespace FieldFallback.Processors.Globalization
 {
     public class PartialLanguageFallbackProcessor : FieldFallbackProcessor
     {
-        public override bool IsEnabledForField(Field field)
+        protected override bool IsEnabledForField(Field field)
         {
             TemplateFallbackFieldItem fallbackField = field;
             return (fallbackField != null && fallbackField.EnableLanguageFallback);
         }
 
-        public override string GetFallbackValue(FieldFallbackPipelineArgs args)
+        protected override string GetFallbackValue(FieldFallbackPipelineArgs args)
         {
             Assert.IsNotNull(args.Field, "Field is null");
 
@@ -27,9 +27,6 @@ namespace FieldFallback.Processors.Globalization
 
                 if (fallbackItem != null)
                 {
-                    // stop processing subsequent fallback checks
-                    args.AbortPipeline();
-
                     // Get field's value from the fallback item
                     return fallbackItem.Fields[args.Field.ID].GetValueSafe(true, true, false);
                 }

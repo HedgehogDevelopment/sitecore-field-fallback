@@ -40,14 +40,12 @@
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.0</PackageVersion>
-    <PackageReadme>
-            Field Fallback Module - Kernel
+    <PackageVersion>1.1.0</PackageVersion>
+    <PackageReadme>Field Fallback Module - Kernel
             http://trac.sitecore.net/FieldFallback
 
             This package was generated with Team Development for Sitecore.
-            http://TeamDevelopmentForSitecore.com
-        </PackageReadme>
+            http://TeamDevelopmentForSitecore.com</PackageReadme>
     <SitecoreAssemblyPath>..\..\lib</SitecoreAssemblyPath>
     <GeneratePackage>True</GeneratePackage>
     <SeperateFilesAndItems>False</SeperateFilesAndItems>

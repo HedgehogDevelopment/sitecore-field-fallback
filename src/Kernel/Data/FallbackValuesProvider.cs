@@ -185,7 +185,7 @@ namespace FieldFallback.Data
 
             // If the field has some value stored in it, it isn't falling back
             // The abstract FieldFallbackProcessor does have this logic, but calling it here can bypass a lot of calls
-            if (field.HasValueSafe() || field.ContainsStandardValue)
+            if (field.HasValueSafe() || field.ContainsStandardValueSafe())
             {
                 return false;
             }
@@ -419,18 +419,7 @@ namespace FieldFallback.Data
 
         private void DataEngine_CopiedItem(object sender, ExecutedEventArgs<CopyItemCommand> e)
         {
-            //! Sitecore Bug 369065 - When an item is duplicated (copy/pasted) in Sitecore
-            //          Sitecore raises the events in this order Copying (source) > Created (new) > Copied (source). 
-            //          It doesn't raise the Creating (new) Event
-            if (FieldFallback.Data.FallbackDisabler.GetStack(false) != null && FieldFallback.Data.FallbackDisabler.GetStack(false).Count > 0)
-            {
-                FieldFallback.Data.FallbackDisabler.Exit();
-            }
-            else
-            {
-                Debug("! Sitecore Bug 369065. Creating Item wasn't raised and we exited out of order.");
-            }
-
+            SafelyExitFallbackDisabledState();
             Logger.PopIndent();
             Debug("<< Copied item '{0}'", e.Command.Source.Name);
         }
@@ -452,9 +441,9 @@ namespace FieldFallback.Data
                 }
             }
 
+            SafelyExitFallbackDisabledState();
             Logger.PopIndent();
             Debug("<< Saved item '{0}'", e.Command.Item.Name);
-            FieldFallback.Data.FallbackDisabler.Exit();
         }
 
         private void DataEngine_CreatingItem(object sender, ExecutingEventArgs<CreateItemCommand> e)
@@ -466,9 +455,9 @@ namespace FieldFallback.Data
 
         private void DataEngine_CreatedItem(object sender, ExecutedEventArgs<CreateItemCommand> e)
         {
+            SafelyExitFallbackDisabledState();
             Logger.PopIndent();
             Debug("<< Created item '{0}'", e.Command.ItemName);
-            FieldFallback.Data.FallbackDisabler.Exit();
         }
 
         private void DataEngine_AddingFromTemplate(object sender, ExecutingEventArgs<AddFromTemplateCommand> e)
@@ -480,9 +469,31 @@ namespace FieldFallback.Data
 
         private void DataEngine_AddedFromTemplate(object sender, ExecutedEventArgs<AddFromTemplateCommand> e)
         {
+            SafelyExitFallbackDisabledState();
             Logger.PopIndent();
             Debug("<< Added From Template item '{0}'", e.Command.ItemName);
-            FieldFallback.Data.FallbackDisabler.Exit();
+        }
+
+        /// <summary>
+        /// Exit the FallbackDisabler safely getting around a Sitecore bug.
+        /// </summary>
+        /// <returns></returns>
+        private bool SafelyExitFallbackDisabledState()
+        {
+            //! Sitecore Bug 369065 - When an item is duplicated (copy/pasted) in Sitecore
+            //          Sitecore raises the events in this order Copying (source) > Created (new) > Copied (source). 
+            //          It doesn't raise the Creating (new) Event
+            if (FieldFallback.Data.FallbackDisabler.GetStack(false) != null && FieldFallback.Data.FallbackDisabler.GetStack(false).Count > 0)
+            {
+                FieldFallback.Data.FallbackDisabler.Exit();
+            }
+            else
+            {
+                Logger.Error("FallbackDisabler has been Exited out of order. A corresponding Enter was missed. See Sitecore Bug 369065");
+                Debug("! Sitecore Bug 369065. Creating Item wasn't raised and we exited out of order.");
+                return false;
+            }
+            return true;
         }
     }
 }

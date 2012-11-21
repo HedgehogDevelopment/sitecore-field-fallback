@@ -13,26 +13,29 @@ namespace FieldFallback.Pipelines.FieldFallbackPipeline
             {
                 if (args.Method == FieldFallbackPipelineArgs.Methods.Execute)
                 {
-                    string fallbackValue = GetFallbackValue(args);
-                    args.FallbackValue = fallbackValue;
+                    args.FallbackValue = GetFallbackValue(args);
                 }
                 else
                 {
-                    bool hasValue = HasFallbackValue(args);
-                    args.HasFallbackValue = hasValue;
+                    args.HasFallbackValue = HasFallbackValue(args);
+                }
+
+                if (args.HasFallbackValue)
+                {
+                    args.AbortPipeline();
                 }
             }
         }
 
-        public abstract bool IsEnabledForField(Field field);
+        protected abstract bool IsEnabledForField(Field field);
 
-        public abstract string GetFallbackValue(FieldFallbackPipelineArgs args);
+        protected abstract string GetFallbackValue(FieldFallbackPipelineArgs args);
 
-        public virtual bool HasFallbackValue(FieldFallbackPipelineArgs args)
+        protected virtual bool HasFallbackValue(FieldFallbackPipelineArgs args)
         {
             // standard values comes before fallback...
             // therefore, if we have standard values, we can't be falling back
-            if (args.Field.ContainsStandardValue)
+            if (args.Field.ContainsStandardValueSafe())
             {
                 return false;
             }
@@ -46,7 +49,6 @@ namespace FieldFallback.Pipelines.FieldFallbackPipeline
             // otherwise, if the value of the field is the same as the calculated fallback value then we are indeed falling back
             if (args.Field.Value == GetFallbackValue(args))
             {
-                args.AbortPipeline();
                 return true;
             }
 

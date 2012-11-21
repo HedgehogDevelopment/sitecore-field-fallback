@@ -25,19 +25,12 @@ namespace FieldFallback.Pipelines.FieldFallbackPipeline
             set
             {
                 _fallbackValue = value;
-
-                if (value != null)
-                {
-                    HasFallbackValue = true;
-
-                    // prevent future processors from firing
-                    this.AbortPipeline();
-                }
+                HasFallbackValue = value != null;
             }
         }
 
-        public bool HasFallbackValue {get; set;}
-      
+        public bool HasFallbackValue { get; set; }
+
         public FieldFallbackPipelineArgs(Methods method, Field field)
         {
             Method = method;
