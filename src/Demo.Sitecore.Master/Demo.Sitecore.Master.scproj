@@ -6,12 +6,9 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{92d0726a-d10a-4b6c-a98b-404a2ee88bcc}</ProjectGuid>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <SourceWebPhysicalPath>
-    </SourceWebPhysicalPath>
-    <SourceWebProject>
-    </SourceWebProject>
-    <SourceWebVirtualPath>
-    </SourceWebVirtualPath>
+    <SourceWebPhysicalPath>..\Demo.Web</SourceWebPhysicalPath>
+    <SourceWebProject>{cc55891f-e4de-4ebd-9a01-0f4498e49fcf}|Demo.Web\Demo.Web.csproj</SourceWebProject>
+    <SourceWebVirtualPath>/Demo.Web.csproj</SourceWebVirtualPath>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <EnableUpdateable>true</EnableUpdateable>
     <UseMerge>true</UseMerge>
@@ -20,8 +17,15 @@
     <DeleteAppCodeCompiledFiles>true</DeleteAppCodeCompiledFiles>
     <LegacyFileReplacement>false</LegacyFileReplacement>
     <AssemblyName>Sample</AssemblyName>
-    <Name>Sample</Name>
+    <Name>Demo.Sitecore.Master</Name>
     <RootNamespace>Sample</RootNamespace>
+    <EnableCodeGeneration>False</EnableCodeGeneration>
+    <FieldsForCodeGen>Title,Blob,Shared,Unversioned,Default value,Validation,ValidationText,__Long description,__Short description,__Display name,__Hidden,__Read Only,__Sortorder</FieldsForCodeGen>
+    <CodeGenFile>
+    </CodeGenFile>
+    <CodeGenTargetProject>Kernel</CodeGenTargetProject>
+    <BaseTransformFile>DocItem1.tt</BaseTransformFile>
+    <SitecoreDatabase>master</SitecoreDatabase>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,7 +52,7 @@
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>1.1.1</PackageVersion>
     <PackageReadme>Field Fallback Module - Sample
             http://trac.sitecore.net/FieldFallback
 
@@ -148,6 +152,61 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout.item">
+      <Icon>/temp/IconCache/Applications/16x16/windows.png</Icon>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Layouts.item">
+      <Icon>/temp/IconCache/Applications/16x16/windows.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Layouts\FieldFallbackDemoLayout.item">
+      <Icon>/temp/IconCache/Applications/32x32/window.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Renderings.item">
+      <Icon>/temp/IconCache/Software/16x16/elements1.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Renderings\FieldFallbackDemo.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Renderings\FieldFallbackDemo\SideNavigation.item">
+      <Icon>/temp/IconCache/Software/16x16/element.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Sublayouts.item">
+      <Icon>/temp/IconCache/Software/16x16/elements_selection.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Sublayouts\FieldFallbackDemo.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Sublayouts\FieldFallbackDemo\AncestorSublayout.item">
+      <Icon>/temp/IconCache/Software/16x16/element_selection.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Sublayouts\FieldFallbackDemo\DefaultSublayout.item">
+      <Icon>/temp/IconCache/Software/16x16/element_selection.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\layout\Sublayouts\FieldFallbackDemo\LateralSublayout.item">
+      <Icon>/temp/IconCache/Software/16x16/element_selection.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\templates.item">
       <Icon>/temp/IconCache/Applications/16x16/form_blue.png</Icon>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
@@ -223,6 +282,11 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\FieldFallbackDemo\Folder\__Standard Values.item">
+      <Icon>/temp/IconCache/Applications/16x16/lightbulb_on.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\templates\FieldFallbackDemo\LateralDemo.item">
       <Icon>/temp/IconCache/Applications/32x32/signpost.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
@@ -268,6 +332,9 @@
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
+  </ItemGroup>
+  <ItemGroup>
+    <ExcludedAssemblies Include="Sitecore.%2a.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
   <!-- After the package is generated, copy it up to the /trunk/release directory -->

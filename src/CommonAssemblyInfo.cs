@@ -25,8 +25,8 @@
 
 using System.Reflection;
 
-[assembly: AssemblyDescription("http://trac.sitecore.net/FieldFallback")]
+[assembly: AssemblyDescription("https://github.com/HedgehogDevelopment/sitecore-field-fallback")]
 [assembly: AssemblyProduct("FieldFallback Kernel")]
 [assembly: AssemblyCompany("Hedgehog Development, LLC http://hhogdev.com")]
 [assembly: AssemblyCopyright("Copyright © 2012 Hedgehog Development, LLC (http://hhogdev.com)")]
-[assembly: AssemblyVersion("1.1.0")]
+[assembly: AssemblyVersion("1.1.1")]

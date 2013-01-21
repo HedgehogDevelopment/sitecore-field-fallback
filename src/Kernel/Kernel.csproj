@@ -93,7 +93,9 @@
     <Compile Include="Validators\FallbackValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\FieldFallback_00.config" />
+    <Content Include="App_Config\Include\FieldFallback_00.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

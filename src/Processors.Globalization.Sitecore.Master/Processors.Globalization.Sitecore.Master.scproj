@@ -47,7 +47,7 @@
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>1.1.1</PackageVersion>
     <PackageReadme>Field Fallback Module - Processors.Globalization
 http://trac.sitecore.net/FieldFallback
 

@@ -7,27 +7,14 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EA0E220B-26C7-454E-883F-40ACBDC53BF4}</ProjectGuid>
+    <ProjectGuid>{CC55891F-E4DE-4EBD-9A01-0F4498E49FCF}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FieldFallback.Processors</RootNamespace>
-    <AssemblyName>FieldFallback.Processors</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <UseIISExpress>false</UseIISExpress>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>4.0</OldToolsVersion>
+    <RootNamespace>FieldFallback.Demo.Web</RootNamespace>
+    <AssemblyName>FieldFallback.Demo.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -51,12 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\lib\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
   </ItemGroup>
@@ -64,25 +46,43 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AncestorFallbackProcessor.cs" />
-    <Compile Include="Caching\FallbackValuesCache.cs" />
-    <Compile Include="Data\Fields\TemplateFallbackFieldItem.cs" />
-    <Compile Include="Data\Items\FallbackItem.cs" />
-    <Compile Include="DefaultFieldFallbackProcessor.cs" />
-    <Compile Include="LateralFieldFallbackProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sitecore modules\FieldFallbackDemo\AncestorSublayout.ascx.cs">
+      <DependentUpon>AncestorSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\FieldFallbackDemo\AncestorSublayout.ascx.designer.cs">
+      <DependentUpon>AncestorSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="sitecore modules\FieldFallbackDemo\DefaultLayout.aspx.cs">
+      <DependentUpon>DefaultLayout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\FieldFallbackDemo\DefaultLayout.aspx.designer.cs">
+      <DependentUpon>DefaultLayout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sitecore modules\FieldFallbackDemo\DefaultSublayout.ascx.cs">
+      <DependentUpon>DefaultSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\FieldFallbackDemo\DefaultSublayout.ascx.designer.cs">
+      <DependentUpon>DefaultSublayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="sitecore modules\FieldFallbackDemo\LateralSublayout.ascx.cs">
+      <DependentUpon>LateralSublayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\FieldFallbackDemo\LateralSublayout.ascx.designer.cs">
+      <DependentUpon>LateralSublayout.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Kernel\Kernel.csproj">
-      <Project>{CB4962D4-F135-408D-930B-E508F0E79EA2}</Project>
-      <Name>Kernel</Name>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_Config\Include\FieldFallback_01.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="sitecore modules\FieldFallbackDemo\AncestorSublayout.ascx" />
+    <Content Include="sitecore modules\FieldFallbackDemo\DefaultLayout.aspx" />
+    <Content Include="sitecore modules\FieldFallbackDemo\DefaultSublayout.ascx" />
+    <Content Include="sitecore modules\FieldFallbackDemo\LateralSublayout.ascx" />
+    <Content Include="sitecore modules\FieldFallbackDemo\SideNavigation.xslt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -95,12 +95,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50350</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:8187/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
