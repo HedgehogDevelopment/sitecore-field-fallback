@@ -230,9 +230,19 @@ namespace FieldFallback.Data
 
             bool isSupported = true;
 
+            // Sitecore 7 Parallel Indexing may not supply us with a SiteContext...
+            // Manually set it in this instnce
+            // https://github.com/HedgehogDevelopment/sitecore-field-fallback/issues/3
+            if (Sitecore.Context.Site == null && Sitecore.Configuration.Settings.GetBoolSetting("ContentSearch.ParallelIndexing.Enabled", false))
+            {
+                Logger.Warn("Sitecore.Context.Site was null and ContentSearch.ParallelIndexing.Enabled was true. Manually setting to 'shell' site. For more info see here: https://github.com/HedgehogDevelopment/sitecore-field-fallback/issues/3", this);
+                Sitecore.Sites.SiteContext site = Sitecore.Sites.SiteContextFactory.GetSiteContext("shell");
+                Sitecore.Context.Site = site;
+            }
+
             Debug(">> IsFallbackSupported - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
             Logger.PushIndent();
-
+            
             if (!_siteManager.IsFallbackEnabledForDisplayMode(Sitecore.Context.Site))
             {
                 Debug("Fallback is not enabled for current page mode");
