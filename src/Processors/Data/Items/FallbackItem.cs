@@ -144,7 +144,7 @@ namespace FieldFallback.Processors.Data.Items
                     if (mainField != null)
                     {
                         List<Field> fallbackFields = new List<Field>();
-                        List<string> fallbackFieldNames = FallbackConfiguration.GetValues(fieldName).FirstOrDefault().Split(new char[]{'|', ',', ' ', ';'}, System.StringSplitOptions.RemoveEmptyEntries).ToList();
+                        List<string> fallbackFieldNames = FallbackConfiguration.GetValues(fieldName).FirstOrDefault().Split(new char[]{'|', ',', ';'}, System.StringSplitOptions.RemoveEmptyEntries).ToList();
                         foreach (string fallbackFieldName in fallbackFieldNames)
                         {
                             Field f = InnerItem.Fields[fallbackFieldName];
