@@ -6,11 +6,7 @@ namespace FieldFallback.Pipelines.FieldFallbackPipeline
 {
     public class FieldFallbackPipelineArgs : PipelineArgs
     {
-        public enum Methods { Query, Execute }
-
         private string _fallbackValue;
-
-        public Methods Method { get; private set; }
 
         public Field Field { get; private set; }
 
@@ -31,9 +27,8 @@ namespace FieldFallback.Pipelines.FieldFallbackPipeline
 
         public bool HasFallbackValue { get; set; }
 
-        public FieldFallbackPipelineArgs(Methods method, Field field)
+        public FieldFallbackPipelineArgs(Field field)
         {
-            Method = method;
             Field = field;
         }
     }

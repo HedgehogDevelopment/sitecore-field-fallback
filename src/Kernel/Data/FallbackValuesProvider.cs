@@ -152,7 +152,7 @@ namespace FieldFallback.Data
                 }
 
                 // Call the fieldFallback pipeline
-                var pipelineArgs = new FieldFallbackPipelineArgs(FieldFallbackPipelineArgs.Methods.Execute, field);
+                var pipelineArgs = new FieldFallbackPipelineArgs(field);
                 Sitecore.Pipelines.CorePipeline.Run("fieldFallback", pipelineArgs);
 
                 // if the args has a value, then one of the processors fell back to something
@@ -177,6 +177,8 @@ namespace FieldFallback.Data
 
         public virtual bool FieldContainsFallbackValue(Field field, Language language)
         {
+            Assert.ArgumentNotNull(field, "field");
+
             // if fallback isn't supported for this field, then we wouldn't have a fallback value
             if (!IsFallbackSupported(field))
             {
@@ -184,15 +186,46 @@ namespace FieldFallback.Data
             }
 
             // If the field has some value stored in it, it isn't falling back
-            // The abstract FieldFallbackProcessor does have this logic, but calling it here can bypass a lot of calls
             if (field.HasValueSafe() || field.ContainsStandardValueSafe())
             {
                 return false;
             }
 
-            var pipelineArgs = new FieldFallbackPipelineArgs(Pipelines.FieldFallbackPipeline.FieldFallbackPipelineArgs.Methods.Query, field);
-            Sitecore.Pipelines.CorePipeline.Run("fieldFallback", pipelineArgs);
-            return pipelineArgs.HasFallbackValue;
+            // try to get the field value (without endless looping into fallback)
+            string val = field.GetValueSafe(false, false, false);
+
+            // Does the field have a value?
+            if (val != null)
+            {
+                return false;
+            }
+
+            // Now we need to get the fallback value and compare it to the field's value
+
+            Item item = field.Item;
+            Assert.ArgumentNotNull(item, "item");
+
+            try
+            {
+                Debug(">> FieldContainsFallbackValue - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
+                Logger.PushIndent();
+
+                // if the value of the field is the same as the calculated fallback value then we are indeed falling back
+                string fallbackValue = GetFallbackValue(field);
+
+                // The call to field.Value should result in a call to GetFallbackValue 
+                // (since we've already ensured that the field doesn't have a value)
+                //+ TODO: figure out way to eliminate the extra call here.
+                bool hasFallbackValue = (field.Value == fallbackValue);
+
+                Debug("{0}", hasFallbackValue);
+                return hasFallbackValue;                
+            }
+            finally
+            {
+                Logger.PopIndent();
+                Debug("<< FieldContainsFallbackValue");
+            }
         }
 
         private bool IsFallbackSupported(Field field)
@@ -242,7 +275,7 @@ namespace FieldFallback.Data
 
             Debug(">> IsFallbackSupported - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
             Logger.PushIndent();
-            
+
             if (!_siteManager.IsFallbackEnabledForDisplayMode(Sitecore.Context.Site))
             {
                 Debug("Fallback is not enabled for current page mode");
