@@ -10,6 +10,7 @@ namespace FieldFallback.Processors.Globalization.Data.Fields
     internal class TemplateFallbackFieldItem : TemplateFieldItem
     {
         public static readonly ID EnableLanguageFallbackFieldID = new ID("{76F75F49-BC51-44C2-9085-13BC162FD9A4}");
+        public static readonly ID EnableLanguageTranslationFieldID = new ID("{6C74AFCD-2EA2-48CA-A49D-9264C5A5F8ED}");
 
         private TemplateFallbackFieldItem(Item innerItem, TemplateSectionItem owner)
             : base(innerItem, owner)
@@ -66,6 +67,14 @@ namespace FieldFallback.Processors.Globalization.Data.Fields
             get
             {
                 return InnerItem.Fields[EnableLanguageFallbackFieldID] != null && ((CheckboxField)InnerItem.Fields[EnableLanguageFallbackFieldID]).Checked;
+            }
+        }
+
+        public bool EnableLanguageTranslation
+        {
+            get
+            {
+                return InnerItem.Fields[EnableLanguageTranslationFieldID] != null && ((CheckboxField)InnerItem.Fields[EnableLanguageTranslationFieldID]).Checked;
             }
         }
     }

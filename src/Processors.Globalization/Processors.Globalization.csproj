@@ -57,6 +57,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Services.Client" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
@@ -67,8 +68,12 @@
     <Compile Include="Data\Fields\TemplateFallbackFieldItem.cs" />
     <Compile Include="Data\Items\LanguageItem.cs" />
     <Compile Include="Extensions\LanguageExtensions.cs" />
+    <Compile Include="Translation\ITranslationService.cs" />
     <Compile Include="PartialLanguageFallbackProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TranslationProcessor.cs" />
+    <Compile Include="Translation\Microsoft.cs" />
+    <Compile Include="Translation\MicrosoftTranslator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kernel\Kernel.csproj">

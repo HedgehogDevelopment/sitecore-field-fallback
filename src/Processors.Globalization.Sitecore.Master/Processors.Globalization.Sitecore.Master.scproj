@@ -112,6 +112,11 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Template field\Fallback\EnableTranslation.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
   </ItemGroup>
   <ItemGroup>
     <ExcludedAssemblies Include="FieldFallback.Kernel.%2a" />
