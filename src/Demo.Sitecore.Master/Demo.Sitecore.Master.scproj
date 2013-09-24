@@ -52,7 +52,7 @@
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.2</PackageVersion>
+    <PackageVersion>1.1.4</PackageVersion>
     <PackageReadme>Field Fallback Module - Sample
             http://trac.sitecore.net/FieldFallback
 
