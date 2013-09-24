@@ -11,6 +11,17 @@ namespace FieldFallback.Processors.Globalization
 {
     public class PartialLanguageFallbackProcessor : FieldFallbackProcessor
     {
+        /// <summary>
+        /// Should a fallback value fallback to a language?
+        /// <remarks>
+        /// In certain scenarios a field may be configured with multiple fallback 
+        /// processors. If enabled, then when the source fields are checked for a value
+        /// they will be checked using their fallback values. 
+        /// This could be problematic/inefficient with certain configurations.
+        /// </remarks>
+        /// </summary>
+        public bool EnableNestedFallback { get; set; }
+
         protected override bool IsEnabledForField(Field field)
         {
             TemplateFallbackFieldItem fallbackField = field;
@@ -28,7 +39,7 @@ namespace FieldFallback.Processors.Globalization
                 if (fallbackItem != null)
                 {
                     // Get field's value from the fallback item
-                    return fallbackItem.Fields[args.Field.ID].GetValueSafe(true, true, false);
+                    return fallbackItem.Fields[args.Field.ID].GetValueSafe(true, true, EnableNestedFallback);
                 }
             }
             return null;

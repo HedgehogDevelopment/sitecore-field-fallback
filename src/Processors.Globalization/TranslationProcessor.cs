@@ -23,6 +23,17 @@ namespace FieldFallback.Processors
         public ITranslationService TranslationService { get; set; }
 
         /// <summary>
+        /// Should a fallback value be translated?
+        /// <remarks>
+        /// In certain scenarios a field may be configured with multiple fallback 
+        /// processors. If enabled, then when the source fields are checked for a value
+        /// they will be checked using their fallback values. 
+        /// This could be problematic/inefficient with certain configurations.
+        /// </remarks>
+        /// </summary>
+        public bool EnableNestedFallback { get; set; }
+
+        /// <summary>
         /// The master language to use as the source for translation
         /// </summary>
         protected Language MasterLanguage
@@ -62,7 +73,7 @@ namespace FieldFallback.Processors
             if (masterItem != null)
             {
                 // Get the value of the field, from the master item, so we can translate it
-                string translateMe = masterItem.Fields[args.Field.ID].GetValueSafe(true, false, false);
+                string translateMe = masterItem.Fields[args.Field.ID].GetValueSafe(true, false, EnableNestedFallback);
 
                 // Call the translation service
                 fieldValue = TranslationService.Translate(translateMe, _masterLanguage.CultureInfo, args.Field.Language.CultureInfo);
