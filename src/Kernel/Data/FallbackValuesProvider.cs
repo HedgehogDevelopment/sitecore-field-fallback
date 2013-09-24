@@ -440,8 +440,10 @@ namespace FieldFallback.Data
             dataEngine.CreatedItem += DataEngine_CreatedItem;
             dataEngine.AddingFromTemplate += DataEngine_AddingFromTemplate;
             dataEngine.AddedFromTemplate += DataEngine_AddedFromTemplate;
+            dataEngine.AddingVersion += DataEngine_AddingVersion;
+            dataEngine.AddedVersion += DataEngine_AddedVersion;
         }
-
+        
         private void DataEngine_RemoveVersion(object sender, ExecutedEventArgs<RemoveVersionCommand> e)
         {
             Cache.RemoveItem(e.Command.Item);
@@ -455,23 +457,17 @@ namespace FieldFallback.Data
 
         private void DataEngine_CopyingItem(object sender, ExecutingEventArgs<CopyItemCommand> e)
         {
-            Debug(">> Copying item '{0}'", e.Command.Source.Name);
-            Logger.PushIndent();
-            FieldFallback.Data.FallbackDisabler.Enter(FallbackStates.Disabled);
+            EnterDisabledState("Copying item '{0}'", e.Command.Source.Name);
         }
 
         private void DataEngine_CopiedItem(object sender, ExecutedEventArgs<CopyItemCommand> e)
         {
-            SafelyExitFallbackDisabledState();
-            Logger.PopIndent();
-            Debug("<< Copied item '{0}'", e.Command.Source.Name);
+            ExitDisabledState("Copied item '{0}'", e.Command.Source.Name);
         }
 
         private void DataEngine_SavingItem(object sender, ExecutingEventArgs<SaveItemCommand> e)
         {
-            Debug(">> Saving item '{0}'", e.Command.Item.Name);
-            Logger.PushIndent();
-            FieldFallback.Data.FallbackDisabler.Enter(FallbackStates.Disabled);
+            EnterDisabledState("Saving item '{0}'", e.Command.Item.Name);
         }
 
         private void DataEngine_SavedItem(object sender, ExecutedEventArgs<SaveItemCommand> e)
@@ -484,37 +480,61 @@ namespace FieldFallback.Data
                 }
             }
 
-            SafelyExitFallbackDisabledState();
-            Logger.PopIndent();
-            Debug("<< Saved item '{0}'", e.Command.Item.Name);
+            ExitDisabledState("Saved item '{0}'", e.Command.Item.Name);
         }
 
         private void DataEngine_CreatingItem(object sender, ExecutingEventArgs<CreateItemCommand> e)
         {
-            Debug(">> Creating item '{0}'", e.Command.ItemName);
-            Logger.PushIndent();
-            FieldFallback.Data.FallbackDisabler.Enter(FallbackStates.Disabled);
+            EnterDisabledState("Creating item '{0}'", e.Command.ItemName);
         }
 
         private void DataEngine_CreatedItem(object sender, ExecutedEventArgs<CreateItemCommand> e)
         {
-            SafelyExitFallbackDisabledState();
-            Logger.PopIndent();
-            Debug("<< Created item '{0}'", e.Command.ItemName);
+            ExitDisabledState("Created item '{0}'", e.Command.ItemName);
         }
 
         private void DataEngine_AddingFromTemplate(object sender, ExecutingEventArgs<AddFromTemplateCommand> e)
         {
-            Debug(">> Adding From Template item '{0}'", e.Command.ItemName);
-            Logger.PushIndent();
-            FieldFallback.Data.FallbackDisabler.Enter(FallbackStates.Disabled);
+            EnterDisabledState("Adding From Template item '{0}'", e.Command.ItemName);
         }
 
         private void DataEngine_AddedFromTemplate(object sender, ExecutedEventArgs<AddFromTemplateCommand> e)
         {
+            ExitDisabledState("Added From Template item '{0}'", e.Command.ItemName);
+        }
+
+        private void DataEngine_AddingVersion(object sender, ExecutingEventArgs<AddVersionCommand> e)
+        {
+            EnterDisabledState("Adding Version of '{0}' ('{1}:{2}')", e.Command.Item.Name, e.Command.Item.Language.Name, e.Command.Item.Version.Number);
+        }
+
+        private void DataEngine_AddedVersion(object sender, ExecutedEventArgs<AddVersionCommand> e)
+        {
+            ExitDisabledState("Added Version of item '{0}' ('{1}:{2}')", e.Command.Item.Name, e.Command.Item.Language.Name, e.Command.Item.Version.Number);
+        }
+
+        /// <summary>
+        /// Disabled FieldFallback and logs the message to the Debug output
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="args">The args.</param>
+        private void EnterDisabledState(string message, params object[] args)
+        {
+            Debug(string.Concat(">> ", string.Format(message, args), " [Fallback Disabled]"));
+            Logger.PushIndent();
+            FieldFallback.Data.FallbackDisabler.Enter(FallbackStates.Disabled);
+        }
+
+        /// <summary>
+        /// Re-Enables FieldFallback
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="args"></param>
+        private void ExitDisabledState(string message, params object[] args)
+        {
             SafelyExitFallbackDisabledState();
             Logger.PopIndent();
-            Debug("<< Added From Template item '{0}'", e.Command.ItemName);
+            Debug(string.Concat("<< ", string.Format(message, args)));
         }
 
         /// <summary>
