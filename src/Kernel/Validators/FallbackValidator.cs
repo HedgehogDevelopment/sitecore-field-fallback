@@ -10,7 +10,7 @@ namespace FieldFallback.Validators
       {
          Field field = GetField();
 
-         if(field != null)
+         if (field != null && FallbackValuesManager.Provider != null)
          {
             if (FallbackValuesManager.Provider.FieldContainsFallbackValue(field, ItemUri.Language))
             {
