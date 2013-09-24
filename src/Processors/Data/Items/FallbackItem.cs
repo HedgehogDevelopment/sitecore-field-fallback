@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Xml;
 using FieldFallback.Data;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
@@ -13,14 +14,11 @@ namespace FieldFallback.Processors.Data.Items
     {
         public static readonly ID FallbackFields = new ID("{8A826BE2-C878-49DA-A0F7-32DB6718E2FB}");
 
-        private NameValueCollection _fallbackConfiguration;
-        private Dictionary<ID, List<Field>> _fallbackDefinition;
-
         private FallbackItem(Item innerItem) : base(innerItem)
         {
-          
+            Initialize();
         }
-        
+
         public static implicit operator FallbackItem(Item item)
         {
             if (item == null)
@@ -30,7 +28,7 @@ namespace FieldFallback.Processors.Data.Items
 
             return new FallbackItem(item);
         }
-        
+
         /// <summary>
         /// Gets a value indicating whether this item has lateral fallback configured.
         /// </summary>
@@ -41,27 +39,7 @@ namespace FieldFallback.Processors.Data.Items
         {
             get
             {
-                return FallbackConfiguration.HasKeys();
-            }
-        }
-
-        /// <summary>
-        /// Gets the fallback configuration from the "FallbackFields" field.
-        /// </summary>
-        /// <value>The fallback configuration.</value>
-        protected NameValueCollection FallbackConfiguration
-        {
-            get
-            {
-                if (_fallbackConfiguration == null)
-                {
-                    // don't use fallback on this configuration field
-                    using (new FallbackDisabler())
-                    {
-                        _fallbackConfiguration = WebUtil.ParseUrlParameters(InnerItem[FallbackFields]);
-                    }
-                }
-                return _fallbackConfiguration ?? new NameValueCollection(0);
+                return FallbackDefinition.Keys.Count > 0;
             }
         }
 
@@ -69,16 +47,10 @@ namespace FieldFallback.Processors.Data.Items
         /// Gets the fallback definition.
         /// </summary>
         /// <value>The fallback definition.</value>
-        protected Dictionary<ID, List<Field>> FallbackDefinition
+        protected Dictionary<ID, Setting> FallbackDefinition
         {
-            get
-            {
-                if (_fallbackDefinition == null)
-                {
-                    _fallbackDefinition = InitializeLateralFallbackConfiguration();
-                }
-                return _fallbackDefinition;
-            }
+            get;
+            private set;
         }
 
         /// <summary>
@@ -86,13 +58,13 @@ namespace FieldFallback.Processors.Data.Items
         /// </summary>
         /// <param name="field">The field.</param>
         /// <returns></returns>
-        public List<Field> GetFallbackFields(Field field)
+        public Setting GetFallbackFields(Field field)
         {
             if (DoesFieldHaveLateralFallback(field))
             {
                 return FallbackDefinition[field.ID];
             }
-            return new List<Field>(0);
+            return null;
         }
 
         /// <summary>
@@ -114,51 +86,134 @@ namespace FieldFallback.Processors.Data.Items
         {
             foreach (ID key in FallbackDefinition.Keys)
             {
-                if (FallbackDefinition[key].Any(f => f.ID == field.ID))
+                if (FallbackDefinition[key].SourceFields.Any(f => f.ID == field.ID))
                 {
                     yield return key;
                 }
             }
         }
 
-        /// <summary>
-        /// Converts the NameValueCollection into Dictionary<ID, List<Field>> 
-        /// where the key is the ID of the field to recieve the fallback value
-        /// and the values are the list of fields to check for a fallback value
-        /// </summary>
-        /// <returns></returns>
-        private Dictionary<ID, List<Field>> InitializeLateralFallbackConfiguration()
+        private void Initialize()
         {
-            Dictionary<ID, List<Field>> dic; 
-            if (!HasLateralFallback)
+            var _fallbackDefinition = new Dictionary<ID, Setting>();
+
+            // don't use fallback on this configuration field
+            using (new FallbackDisabler())
             {
-                dic = new Dictionary<ID, List<Field>>(0);
-            }
-            else
-            {
-                dic = new Dictionary<ID, List<Field>>();
-                foreach (string fieldName in FallbackConfiguration.AllKeys)
+                // try to get this fields as an XML field
+                // Original version of this field was key/value pair
+                // It was converted to XML to support advanced options
+                XmlField test = InnerItem.Fields[FallbackFields];
+                if (test.Xml == null)
                 {
-                    Field mainField = InnerItem.Fields[fieldName];
-
-                    if (mainField != null)
-                    {
-                        List<Field> fallbackFields = new List<Field>();
-                        List<string> fallbackFieldNames = FallbackConfiguration.GetValues(fieldName).FirstOrDefault().Split(new char[]{'|', ',', ';'}, System.StringSplitOptions.RemoveEmptyEntries).ToList();
-                        foreach (string fallbackFieldName in fallbackFieldNames)
-                        {
-                            Field f = InnerItem.Fields[fallbackFieldName];
-                            if (f != null)
-                            {
-                                fallbackFields.Add(f);
-                            }
-                        }
-
-                        dic.Add(mainField.ID, fallbackFields);
-                    }
+                    ParseNameValueConfiguration(InnerItem[FallbackFields], _fallbackDefinition);
+                }
+                else
+                {
+                    ParseXmlConfiguration(test, _fallbackDefinition);
                 }
             }
-            return dic;
+            FallbackDefinition = _fallbackDefinition;
+        }
+
+        private void ParseNameValueConfiguration(string oldConfigurationValue, Dictionary<ID, Setting> settings)
+        {
+            NameValueCollection fallbackConfiguration = WebUtil.ParseUrlParameters(oldConfigurationValue);
+            foreach (string fieldName in fallbackConfiguration.AllKeys)
+            {
+                Field mainField = InnerItem.Fields[fieldName];
+
+                if (mainField != null)
+                {
+                    List<Field> fallbackFields = new List<Field>();
+                    List<string> fallbackFieldNames = fallbackConfiguration.GetValues(fieldName).FirstOrDefault().Split(new char[] { '|', ',', ';' }, System.StringSplitOptions.RemoveEmptyEntries).ToList();
+                    foreach (string fallbackFieldName in fallbackFieldNames)
+                    {
+                        Field f = InnerItem.Fields[fallbackFieldName];
+                        if (f != null)
+                        {
+                            fallbackFields.Add(f);
+                        }
+                    }
+
+                    Setting setting = new Setting();
+                    setting.SourceFields = fallbackFields;
+
+                    settings.Add(mainField.ID, setting);
+                }
+            }
+        }
+
+        private void ParseXmlConfiguration(XmlField fallbackField, Dictionary<ID, Setting> settings)
+        {
+            // complex structure...
+            // TODO: Create a nice Sitecore field editing interface for this
+
+            /// <fallback>
+            ///     <setting target="{id}" source="{id}|{id}|{id}..." enableEllipsis="true|false" clipAt="{number chars}" />
+            ///     <setting target="{id}" source="{id}|{id}|{id}..." enableEllipsis="true|false" clipAt="{number chars}" />
+            ///     ...
+            /// </fallback>
+
+            foreach (XmlNode child in fallbackField.Xml.FirstChild.ChildNodes)
+            {
+                XmlAttribute target = child.Attributes["target"];
+                XmlAttribute source = child.Attributes["source"];
+                XmlAttribute enableEllipsis = child.Attributes["enableEllipsis"];
+                XmlAttribute clipAt = child.Attributes["clipAt"];
+
+                /// TODO: Guard against improper input.. move to factory
+                Setting setting = new Setting();
+
+                if (enableEllipsis != null)
+                {
+                    setting.UseEllipsis = bool.Parse(enableEllipsis.Value);
+                }
+
+                if (clipAt != null)
+                {
+                    int i;
+                    if (int.TryParse(clipAt.Value, out i) && i > 0)
+                    {
+                        setting.ClipAt = i;
+                    }
+                }
+
+                List<Field> fallbackFields = new List<Field>();
+                List<string> fallbackFieldNames = source.Value.Split(new char[] { '|', ',', ';' }, System.StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (string fallbackFieldName in fallbackFieldNames)
+                {
+                    Field f = InnerItem.Fields[fallbackFieldName];
+                    if (f != null)
+                    {
+                        fallbackFields.Add(f);
+                    }
+                }
+
+                setting.SourceFields = fallbackFields;
+
+                ID targetID = new Sitecore.Data.ID(target.Value);
+
+                settings.Add(targetID, setting);
+
+            }
+        }
+
+        internal class Setting
+        {
+            public List<Sitecore.Data.Fields.Field> SourceFields { get; set; }
+
+            public bool TruncateText
+            {
+                get
+                {
+                    return ClipAt.HasValue;
+                }
+            }
+
+            public bool UseEllipsis { get; set; }
+
+            public int? ClipAt { get; set; }
         }
     }
 }
