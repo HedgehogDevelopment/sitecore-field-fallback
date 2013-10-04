@@ -1,6 +1,7 @@
 ﻿using System;
 using Sitecore;
 using System.Diagnostics;
+using System.Web.Configuration;
 
 namespace FieldFallback.Logging
 {
@@ -11,6 +12,11 @@ namespace FieldFallback.Logging
         private int _indent = 0;
 
         public bool Enabled { get; set; }
+
+        public Logger()
+        {
+            
+        }
 
         public void Info(string message)
         {
@@ -55,10 +61,21 @@ namespace FieldFallback.Logging
         {
             if (Enabled)
             {
-                // Use SysInternals DebugView to see these on the server
+                // Use SysInternals DebugView to see these in realtime 
+                //   Capture (Ensure the following are checked)
+                //       Capture Global Win32
+                //       Capture Events
+                //     
+                // You may also attach your debugger and look at the Output Window
+                //! This requires a DEBUG build of the dll.
                 System.Diagnostics.Debug.WriteLine(FormatMessage(message));
 
-                Trace(message);
+                // Trace will work in RELEASE mode dll's
+                // If Trace is enabled in the web.config then output to trace so you can see it via http://localhost/trace.axd
+                if (System.Web.HttpContext.Current != null && System.Web.HttpContext.Current.Trace.IsEnabled)
+                {
+                    System.Web.HttpContext.Current.Trace.Write(LOG_PREFIX, message);
+                }
             }
         }
 
@@ -105,20 +122,6 @@ namespace FieldFallback.Logging
                 s.Append("    ");
             }
             return s.ToString();
-        }
-
-        /// <summary>
-        /// If the TRACE compilation symbol is defined and Trace is enabled in the web.config
-        /// then output to trace so you can see it via http://localhost/trace.axd
-        /// </summary>
-        /// <param name="message">The message.</param>
-        [Conditional("TRACE")]
-        private void Trace(string message)
-        {
-            if (System.Web.HttpContext.Current != null)
-            {
-                System.Web.HttpContext.Current.Trace.Write(LOG_PREFIX, message);
-            }
         }
     }
 }

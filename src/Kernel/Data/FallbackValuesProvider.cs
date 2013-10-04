@@ -134,7 +134,7 @@ namespace FieldFallback.Data
             Item item = field.Item;
             Assert.ArgumentNotNull(item, "item");
 
-            Debug(">> GetFallbackValue - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
+            Logger.Debug(">> GetFallbackValue - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
             Logger.PushIndent();
 
             string value = null;
@@ -147,7 +147,7 @@ namespace FieldFallback.Data
                 // we have a cached value.. return it.
                 if (value != null)
                 {
-                    Debug("Value found in the cache");
+                    Logger.Debug("Value found in the cache");
                     return value;
                 }
 
@@ -158,20 +158,20 @@ namespace FieldFallback.Data
                 // if the args has a value, then one of the processors fell back to something
                 if (pipelineArgs.HasFallbackValue)
                 {
-                    Debug("Fallback Found");
+                    Logger.Debug("Fallback Found");
 
                     // put it in the cache
                     Cache.AddFallbackValues(item, field, pipelineArgs.FallbackValue);
                     return pipelineArgs.FallbackValue;
                 }
 
-                Debug("No fallback");
+                Logger.Debug("No fallback");
                 return null;
             }
             finally
             {
                 Logger.PopIndent();
-                Debug("<< GetFallbackValue");
+                Logger.Debug("<< GetFallbackValue");
             }
         }
 
@@ -207,7 +207,7 @@ namespace FieldFallback.Data
 
             try
             {
-                Debug(">> FieldContainsFallbackValue - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
+                Logger.Debug(">> FieldContainsFallbackValue - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
                 Logger.PushIndent();
 
                 // if the value of the field is the same as the calculated fallback value then we are indeed falling back
@@ -218,13 +218,13 @@ namespace FieldFallback.Data
                 //+ TODO: figure out way to eliminate the extra call here.
                 bool hasFallbackValue = (field.Value == fallbackValue);
 
-                Debug("{0}", hasFallbackValue);
+                Logger.Debug("{0}", hasFallbackValue);
                 return hasFallbackValue;                
             }
             finally
             {
                 Logger.PopIndent();
-                Debug("<< FieldContainsFallbackValue");
+                Logger.Debug("<< FieldContainsFallbackValue");
             }
         }
 
@@ -232,7 +232,7 @@ namespace FieldFallback.Data
         {
             if (FieldFallback.Data.FallbackDisabler.CurrentValue == FallbackStates.Disabled)
             {
-                //Debug("@ Fallback Disabled by Disabler [{0}:{1}]", field.Item.Name, field.Name);
+                //Logger.Debug("@ Fallback Disabled by Disabler [{0}:{1}]", field.Item.Name, field.Name);
                 return false;
             }
 
@@ -240,14 +240,14 @@ namespace FieldFallback.Data
 
             if (IsIgnoredField(field))
             {
-                //Debug("@ Field {0} is ignored", field.Name);
+                //Logger.Debug("@ Field {0} is ignored", field.Name);
                 return false;
             }
 
             // Check the cache to see if this field is supported
             if (_supportCache.GetFallbackSupport(field).HasValue)
             {
-                //Debug("@ IsFallbackSupported (cache hit - {0}) ", SupportCache.GetFallbackSupport(field).Value);
+                //Logger.Debug("@ IsFallbackSupported (cache hit - {0}) ", SupportCache.GetFallbackSupport(field).Value);
                 return _supportCache.GetFallbackSupport(field).Value;
             }
 
@@ -257,7 +257,7 @@ namespace FieldFallback.Data
             // see if we know this item should be skipped
             if (SkipItemCache.IsItemSkipped(item))
             {
-                //Debug("@ IsFallbackSupported (SkipItemCache cache hit) ");
+                //Logger.Debug("@ IsFallbackSupported (SkipItemCache cache hit) ");
                 return false;
             }
 
@@ -273,22 +273,22 @@ namespace FieldFallback.Data
                 Sitecore.Context.Site = site;
             }
 
-            Debug(">> IsFallbackSupported - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
+            Logger.Debug(">> IsFallbackSupported - s:{0} db:{1} i:{2} f:{3}", Sitecore.Context.GetSiteName(), item.Database.Name, item.ID, field.Name);
             Logger.PushIndent();
 
             if (!_siteManager.IsFallbackEnabledForDisplayMode(Sitecore.Context.Site))
             {
-                Debug("Fallback is not enabled for current page mode");
+                Logger.Debug("Fallback is not enabled for current page mode");
                 isSupported = false;
             }
             else if (!_siteManager.IsFallbackEnabled(Sitecore.Context.Site.SiteInfo))
             {
-                Debug("Fallback is not enabled for site {0}", Sitecore.Context.Site.Name);
+                Logger.Debug("Fallback is not enabled for site {0}", Sitecore.Context.Site.Name);
                 isSupported = false;
             }
             else if (!IsItemInSupportedDatabase(item))
             {
-                Debug("Item database '{0}' not valid.", item.Database.Name);
+                Logger.Debug("Item database '{0}' not valid.", item.Database.Name);
                 isSupported = false;
 
                 // lets cache this item as skipped to prevent future checks on it
@@ -296,7 +296,7 @@ namespace FieldFallback.Data
             }
             else if (!IsItemInSupportedContentPath(item)) // it must be under /sitecore/content
             {
-                Debug("Item {0} is in an invalid path", item.Name);
+                Logger.Debug("Item {0} is in an invalid path", item.Name);
                 isSupported = false;
 
                 // lets cache this item as skipped to prevent future checks on it
@@ -305,7 +305,7 @@ namespace FieldFallback.Data
 
             _supportCache.SetFallbackSupport(field, isSupported);
             Logger.PopIndent();
-            Debug("<< IsFallbackSupported: {0}", isSupported);
+            Logger.Debug("<< IsFallbackSupported: {0}", isSupported);
             return isSupported;
         }
 
@@ -395,18 +395,6 @@ namespace FieldFallback.Data
                 Logger.Info("FallbackProvider enabled for the '{0}' site.", siteName);
                 _siteManager.EnableSite(siteName);
             }
-        }
-
-        /// <summary>
-        /// Writes the specified message to the ILogger.Debug method.
-        /// <para>This method is only called when the DEBUG compilation symbol is defined.</para>
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="args">The args.</param>
-        [Conditional("DEBUG")]
-        private void Debug(string message, params object[] args)
-        {
-            Logger.Debug(message, args);
         }
 
         /// <summary>
@@ -520,7 +508,7 @@ namespace FieldFallback.Data
         /// <param name="args">The args.</param>
         private void EnterDisabledState(string message, params object[] args)
         {
-            Debug(string.Concat(">> ", string.Format(message, args), " [Fallback Disabled]"));
+            Logger.Debug(string.Concat(">> ", string.Format(message, args), " [Fallback Disabled]"));
             Logger.PushIndent();
             FieldFallback.Data.FallbackDisabler.Enter(FallbackStates.Disabled);
         }
@@ -534,7 +522,7 @@ namespace FieldFallback.Data
         {
             SafelyExitFallbackDisabledState();
             Logger.PopIndent();
-            Debug(string.Concat("<< ", string.Format(message, args)));
+            Logger.Debug(string.Concat("<< ", string.Format(message, args)));
         }
 
         /// <summary>
@@ -553,7 +541,7 @@ namespace FieldFallback.Data
             else
             {
                 Logger.Error("FallbackDisabler has been Exited out of order. A corresponding Enter was missed. See Sitecore Bug 369065");
-                Debug("! Sitecore Bug 369065. Creating Item wasn't raised and we exited out of order.");
+                Logger.Debug("! Sitecore Bug 369065. Creating Item wasn't raised and we exited out of order.");
                 return false;
             }
             return true;
