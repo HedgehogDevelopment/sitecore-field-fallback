@@ -73,7 +73,7 @@ namespace FieldFallback.Data
         public FallbackValuesProvider(string databases, string sites)
         {
             Assert.IsNotNullOrEmpty(databases, "databases param cannot be null or empty");
-            Assert.IsNotNullOrEmpty(sites, "databases param cannot be null or empty");
+            Assert.IsNotNullOrEmpty(sites, "sites param cannot be null or empty");
 
             SupportedDatabaseNames = databases.Split(new[] { '|', ' ', ',' });
             SupportedSiteNames = sites.Split(new[] { '|', ' ', ',' });
@@ -294,7 +294,7 @@ namespace FieldFallback.Data
                 // lets cache this item as skipped to prevent future checks on it
                 SkipItemCache.SetSkippedItem(item);
             }
-            else if (!IsItemInSupportedContentPath(item)) // it must be under /sitecore/content
+            else if (!IsItemInSupportedPath(item)) // it must be under /sitecore/content
             {
                 Logger.Debug("Item {0} is in an invalid path", item.Name);
                 isSupported = false;
@@ -320,7 +320,7 @@ namespace FieldFallback.Data
             return SupportedDatabaseNames.Contains(item.Database.Name, StringComparer.OrdinalIgnoreCase);
         }
 
-        private bool IsItemInSupportedContentPath(Item item)
+        protected virtual bool IsItemInSupportedPath(Item item)
         {
             // get the path once!
             // Each call to `item.Paths.Path` will walk up the tree
@@ -345,7 +345,7 @@ namespace FieldFallback.Data
             IEnumerable<string> paths = SupportedContentPaths.Split(new[] { '|', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             // but there isn't...
-            if (paths.Count() <= 0)
+            if (!paths.Any())
             {
                 return isContentItem;
             }
