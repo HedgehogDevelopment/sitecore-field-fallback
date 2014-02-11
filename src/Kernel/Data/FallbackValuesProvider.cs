@@ -311,47 +311,28 @@ namespace FieldFallback.Data
 
         private bool IsItemInSupportedDatabase(Item item)
         {
-            if (item == null)
-            {
-                return false;
-            }
-
-            // Is the database the item is in within the supported databases?
-            return SupportedDatabaseNames.Contains(item.Database.Name, StringComparer.OrdinalIgnoreCase);
+            return item != null && SupportedDatabaseNames.Contains(item.Database.Name, StringComparer.OrdinalIgnoreCase);
         }
 
         protected virtual bool IsItemInSupportedPath(Item item)
         {
-            // get the path once!
-            // Each call to `item.Paths.Path` will walk up the tree
-            string itemPath = item.Paths.Path.ToLower();
+            // Get the path once! Each call to 'item.Paths.Path' will walk up the tree
+            var itemPath = item.Paths.Path.ToLower();
 
-            // `item.Paths.IsContentItem` is what we can use, but again, this will walk up the tree each time
-            bool isContentItem = itemPath.StartsWith("/sitecore/content/", StringComparison.OrdinalIgnoreCase);
+            var isContentItem = itemPath.StartsWith("/sitecore/content/", StringComparison.OrdinalIgnoreCase)
+                                || itemPath.StartsWith("/sitecore/media library/", StringComparison.OrdinalIgnoreCase);
 
-            // the item must be a content item.
-            if (!isContentItem)
-            {
-                return false;
-            }
+            // the item must be either a content or media item.
+            if (!isContentItem) return false;
 
             // if there is no configured value...
-            if (string.IsNullOrEmpty(SupportedContentPaths))
-            {
-                return isContentItem;
-            }
+            if (String.IsNullOrEmpty(SupportedContentPaths)) return true;
 
             // there could be multiple values specified
-            IEnumerable<string> paths = SupportedContentPaths.Split(new[] { '|', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var paths = SupportedContentPaths.Split(new[] {'|', ' ', ','},
+                                                    StringSplitOptions.RemoveEmptyEntries);
 
-            // but there isn't...
-            if (!paths.Any())
-            {
-                return isContentItem;
-            }
-
-            // see if the item's path starts with a configured value
-            return paths.Any(path => itemPath.StartsWith(path.ToLower()));
+            return !paths.Any() || paths.Any(path => itemPath.StartsWith(path.ToLower()));
         }
 
         private bool IsIgnoredField(Field field)
