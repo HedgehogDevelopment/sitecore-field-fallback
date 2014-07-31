@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -52,7 +52,7 @@
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.5</PackageVersion>
+    <PackageVersion>1.1.6</PackageVersion>
     <PackageReadme>Field Fallback Module - Sample
             http://trac.sitecore.net/FieldFallback
 
@@ -62,6 +62,7 @@
     <GeneratePackage>True</GeneratePackage>
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+    <PackageName>Demo.Sitecore.Master</PackageName>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
@@ -335,6 +336,12 @@
   </ItemGroup>
   <ItemGroup>
     <ExcludedAssemblies Include="Sitecore.%2a.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Demo.Web\Demo.Web.csproj">
+      <Project>{cc55891f-e4de-4ebd-9a01-0f4498e49fcf}</Project>
+      <Name>Demo.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
   <!-- After the package is generated, copy it up to the /trunk/release directory -->

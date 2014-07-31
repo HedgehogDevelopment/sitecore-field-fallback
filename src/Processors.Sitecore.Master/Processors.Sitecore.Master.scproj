@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -47,7 +47,7 @@
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.5</PackageVersion>
+    <PackageVersion>1.1.6</PackageVersion>
     <PackageReadme>Field Fallback Module - Processors
 http://trac.sitecore.net/FieldFallback
 
@@ -64,6 +64,7 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
     <SitecoreAccessGuid>
     </SitecoreAccessGuid>
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
+    <PackageName>Processors.Sitecore.Master</PackageName>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
@@ -140,6 +141,12 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
     <ExcludedAssemblies Include="HtmlAgilityPack.dll" />
     <ExcludedAssemblies Include="Lucene.Net.dll" />
     <ExcludedAssemblies Include="Sitecore.%2a.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Processors\Processors.csproj">
+      <Project>{ea0e220b-26c7-454e-883f-40acbdc53bf4}</Project>
+      <Name>Processors</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
   <!-- After the package is generated, copy it up to the /trunk/release directory -->

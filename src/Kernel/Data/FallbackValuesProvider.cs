@@ -408,6 +408,7 @@ namespace FieldFallback.Data
 
             // Hook into the Delete/Remove/Saved events to clear caches
             dataEngine.DeletedItem += DataEngine_DeletedItem;
+            dataEngine.DeletedItemRemote += DataEngine_DeletedItemRemote;
             dataEngine.RemovedVersion += DataEngine_RemoveVersion;
 
             /* 
@@ -424,6 +425,7 @@ namespace FieldFallback.Data
             dataEngine.CopiedItem += DataEngine_CopiedItem;
             dataEngine.SavingItem += DataEngine_SavingItem;
             dataEngine.SavedItem += DataEngine_SavedItem;
+            dataEngine.SavedItemRemote+=DataEngine_SavedItemRemote;
             dataEngine.CreatingItem += DataEngine_CreatingItem;
             dataEngine.CreatedItem += DataEngine_CreatedItem;
             dataEngine.AddingFromTemplate += DataEngine_AddingFromTemplate;
@@ -431,7 +433,7 @@ namespace FieldFallback.Data
             dataEngine.AddingVersion += DataEngine_AddingVersion;
             dataEngine.AddedVersion += DataEngine_AddedVersion;
         }
-        
+
         private void DataEngine_RemoveVersion(object sender, ExecutedEventArgs<RemoveVersionCommand> e)
         {
             Cache.RemoveItem(e.Command.Item);
@@ -441,6 +443,12 @@ namespace FieldFallback.Data
         {
             Cache.RemoveTree(e.Command.Item);
             SkipItemCache.UnSkipItem(e.Command.Item);
+        }
+
+        private void DataEngine_DeletedItemRemote(object sender, ItemDeletedRemoteEventArgs e)
+        {
+            Cache.RemoveTree(e.Item);
+            SkipItemCache.UnSkipItem(e.Item);
         }
 
         private void DataEngine_CopyingItem(object sender, ExecutingEventArgs<CopyItemCommand> e)
@@ -469,6 +477,17 @@ namespace FieldFallback.Data
             }
 
             ExitDisabledState("Saved item '{0}'", e.Command.Item.Name);
+        }
+
+        private void DataEngine_SavedItemRemote(object sender, ItemSavedRemoteEventArgs e)
+        {
+            if (e.Changes.HasFieldsChanged)
+            {
+                foreach (FieldChange change in e.Changes.FieldChanges)
+                {
+                    Cache.RemoveItemField(e.Item, change.FieldID);
+                }
+            }
         }
 
         private void DataEngine_CreatingItem(object sender, ExecutingEventArgs<CreateItemCommand> e)
