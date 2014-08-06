@@ -15,7 +15,9 @@ using Sitecore.Data.Events;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Events;
 using Sitecore.Globalization;
+using Sitecore.Publishing;
 
 namespace FieldFallback.Data
 {
@@ -219,7 +221,7 @@ namespace FieldFallback.Data
                 bool hasFallbackValue = (field.Value == fallbackValue);
 
                 Logger.Debug("{0}", hasFallbackValue);
-                return hasFallbackValue;                
+                return hasFallbackValue;
             }
             finally
             {
@@ -403,7 +405,7 @@ namespace FieldFallback.Data
         /// <param name="database">The database.</param>
         private void InitializeEventHandlers(Database database)
         {
-            Logger.Info("Instatiating event handlers for database: {0}", database.Name);
+            Logger.Info("Instantiating event handlers for database: {0}", database.Name);
             Sitecore.Data.Engines.DataEngine dataEngine = database.Engines.DataEngine;
 
             // Hook into the Delete/Remove/Saved events to clear caches
@@ -425,13 +427,17 @@ namespace FieldFallback.Data
             dataEngine.CopiedItem += DataEngine_CopiedItem;
             dataEngine.SavingItem += DataEngine_SavingItem;
             dataEngine.SavedItem += DataEngine_SavedItem;
-            dataEngine.SavedItemRemote+=DataEngine_SavedItemRemote;
+            dataEngine.SavedItemRemote += DataEngine_SavedItemRemote;
             dataEngine.CreatingItem += DataEngine_CreatingItem;
             dataEngine.CreatedItem += DataEngine_CreatedItem;
             dataEngine.AddingFromTemplate += DataEngine_AddingFromTemplate;
             dataEngine.AddedFromTemplate += DataEngine_AddedFromTemplate;
             dataEngine.AddingVersion += DataEngine_AddingVersion;
             dataEngine.AddedVersion += DataEngine_AddedVersion;
+
+            // The delivery nodes must subscribe to the end publish event... 
+            // we need to invalidate the cache of published items
+            Event.Subscribe("publish:end:remote", new System.EventHandler(this.OnPublishEndRemoteHandled));
         }
 
         private void DataEngine_RemoveVersion(object sender, ExecutedEventArgs<RemoveVersionCommand> e)
@@ -518,6 +524,37 @@ namespace FieldFallback.Data
         private void DataEngine_AddedVersion(object sender, ExecutedEventArgs<AddVersionCommand> e)
         {
             ExitDisabledState("Added Version of item '{0}' ('{1}:{2}')", e.Command.Item.Name, e.Command.Item.Language.Name, e.Command.Item.Version.Number);
+        }
+
+        private void OnPublishEndRemoteHandled(object sender, EventArgs args)
+        {
+            PublishEndRemoteEventArgs remoteArgs = args as PublishEndRemoteEventArgs;
+            
+            bool deep = remoteArgs.Deep;
+            ID rootItemID = ID.Parse(remoteArgs.RootItemId);
+
+            // We can't rely on the name of the target database (as the publishing target name in the CM may not match a DB name in the CD environment)
+            // Iterate over each supported DB and try to get the item
+            foreach (string db in SupportedDatabaseNames)
+            {
+                Database publishingTarget = Sitecore.Configuration.Factory.GetDatabase(db);
+                if (publishingTarget != null)
+                {
+                    Item publishedItem = publishingTarget.GetItem(rootItemID);
+
+                    if (publishedItem != null)
+                    {
+                        if (deep)
+                        {
+                            Cache.RemoveTree(publishedItem);
+                        }
+                        else
+                        {
+                            Cache.RemoveItem(publishedItem);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
