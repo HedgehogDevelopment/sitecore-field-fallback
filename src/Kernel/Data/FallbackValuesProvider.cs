@@ -75,7 +75,7 @@ namespace FieldFallback.Data
         public FallbackValuesProvider(string databases, string sites)
         {
             Assert.IsNotNullOrEmpty(databases, "databases param cannot be null or empty");
-            Assert.IsNotNullOrEmpty(sites, "databases param cannot be null or empty");
+            Assert.IsNotNullOrEmpty(sites, "sites param cannot be null or empty");
 
             SupportedDatabaseNames = databases.Split(new[] { '|', ' ', ',' });
             SupportedSiteNames = sites.Split(new[] { '|', ' ', ',' });
