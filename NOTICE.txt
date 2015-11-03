@@ -1,0 +1,6 @@
+Hedgehog - Sitecore Field Fallback Module
+Copyright (C) 2012 Hedgehog Development, LLC
+
+This source code is covered by the Apache License, Version 2.0, which
+can be found in the accompanying LICENSE.txt file, or online at
+http://www.apache.org/licenses/.
