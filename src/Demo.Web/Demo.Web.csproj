@@ -93,7 +93,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -109,6 +108,9 @@
     <Content Include="sitecore modules\FieldFallbackDemo\DefaultSublayout.ascx" />
     <Content Include="sitecore modules\FieldFallbackDemo\LateralSublayout.ascx" />
     <Content Include="sitecore modules\FieldFallbackDemo\SideNavigation.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
