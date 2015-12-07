@@ -109,9 +109,7 @@
     <Content Include="sitecore modules\FieldFallbackDemo\LateralSublayout.ascx" />
     <Content Include="sitecore modules\FieldFallbackDemo\SideNavigation.xslt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\PublishProfiles\" />
-  </ItemGroup>
+
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
