@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {BA52E5F4-D390-4633-8CF3-FBA012EBA4BC}
+database: master
+path: /sitecore/templates/FieldFallbackDemo/MediaDemo/__Standard Values
+parent: {E65308F8-DD95-4652-9422-C50D2857C081}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {E65308F8-DD95-4652-9422-C50D2857C081}
+templatekey: MediaDemo
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 36
+
+applications/32x32/photo_scenery.png
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 358
+
+<r  xmlns:xsd="http://www.w3.org/2001/XMLSchema"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{1D52117B-F5EE-4E8A-8EAF-1FEFE703C7D9}"><r id="{ECE8FDD5-22E9-4D4B-B1B3-C0C749B5ABB4}" ph="content" uid="{64D821E1-5DFD-462E-A078-93BBE4BFAF20}" /><r id="{16D838CE-08BD-4F99-8445-DA8F66E43EC8}" ph="left" uid="{A408E06C-E9B5-48A1-B5B7-60DABE71DB50}" /></d></r>
+----version----
+language: en
+version: 1
+revision: 5049cfe7-d1cb-43f9-83d2-22388ff22fe7
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20151203T164214
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+5049cfe7-d1cb-43f9-83d2-22388ff22fe7
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20151204T140334:635848346140851616
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
