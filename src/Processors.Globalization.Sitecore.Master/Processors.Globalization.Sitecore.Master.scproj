@@ -50,7 +50,7 @@
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.7</PackageVersion>
+    <PackageVersion>1.2.0</PackageVersion>
     <PackageReadme>Field Fallback Module - Processors.Globalization
 http://trac.sitecore.net/FieldFallback
 
@@ -61,6 +61,7 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
     <PackageName>Processors.Globalization.Sitecore.Master</PackageName>
+    <PackageExcludeCode>False</PackageExcludeCode>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
