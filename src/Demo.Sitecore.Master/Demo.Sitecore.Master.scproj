@@ -35,9 +35,9 @@
     </SitecoreDeployFolder>
     <SitecoreWebUrl>
     </SitecoreWebUrl>
-    <SitecoreAccessGuid></SitecoreAccessGuid>
+    <SitecoreAccessGuid>
+    </SitecoreAccessGuid>
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
-
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
@@ -230,6 +230,7 @@
     </SitecoreItem>
     <SitecoreItem Include="sitecore\media library\Images\cat.item">
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\templates.item">
       <Icon>/temp/IconCache/Applications/16x16/form_blue.png</Icon>
@@ -394,6 +395,7 @@
     </SitecoreItem>
     <SitecoreItem Include="sitecore\templates\System\Media\Unversioned\File\Information\Title.item">
       <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
   </ItemGroup>
   <ItemGroup>
