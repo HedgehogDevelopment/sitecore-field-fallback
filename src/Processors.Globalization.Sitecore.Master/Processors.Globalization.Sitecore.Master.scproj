@@ -28,6 +28,9 @@
     <SccLocalPath>
     </SccLocalPath>
     <SitecoreDatabase>master</SitecoreDatabase>
+    <EnableCodeGeneration>false</EnableCodeGeneration>
+    <ManageRoles>False</ManageRoles>
+    <AssemblyStatus>Exclude</AssemblyStatus>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,7 +50,7 @@
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.7</PackageVersion>
+    <PackageVersion>1.2.0</PackageVersion>
     <PackageReadme>Field Fallback Module - Processors.Globalization
 http://trac.sitecore.net/FieldFallback
 
@@ -58,6 +61,7 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
     <PackageName>Processors.Globalization.Sitecore.Master</PackageName>
+    <PackageExcludeCode>False</PackageExcludeCode>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
@@ -120,16 +124,16 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
     </SitecoreItem>
   </ItemGroup>
   <ItemGroup>
-    <ExcludedAssemblies Include="FieldFallback.Kernel.%2a" />
-    <ExcludedAssemblies Include="HtmlAgilityPack.dll" />
-    <ExcludedAssemblies Include="Lucene.Net.dll" />
-    <ExcludedAssemblies Include="Sitecore.%2a.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Processors.Globalization\Processors.Globalization.csproj">
       <Project>{c7f2cf0e-b4b3-4fd4-b226-b0862181d01f}</Project>
       <Name>Processors.Globalization</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ExcludedAssemblies Include="FieldFallback.Kernel.%2a" />
+    <ExcludedAssemblies Include="HtmlAgilityPack.dll" />
+    <ExcludedAssemblies Include="Lucene.Net.dll" />
+    <ExcludedAssemblies Include="Sitecore.%2a.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
   <!-- After the package is generated, copy it up to the /trunk/release directory -->

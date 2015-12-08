@@ -296,7 +296,7 @@ namespace FieldFallback.Data
                 // lets cache this item as skipped to prevent future checks on it
                 SkipItemCache.SetSkippedItem(item);
             }
-            else if (!IsItemInSupportedContentPath(item)) // it must be under /sitecore/content
+            else if (!IsItemInSupportedPath(item)) // it must be under /sitecore/content or /sitecore/media library
             {
                 Logger.Debug("Item {0} is in an invalid path", item.Name);
                 isSupported = false;
@@ -322,17 +322,18 @@ namespace FieldFallback.Data
             return SupportedDatabaseNames.Contains(item.Database.Name, StringComparer.OrdinalIgnoreCase);
         }
 
-        private bool IsItemInSupportedContentPath(Item item)
+        private bool IsItemInSupportedPath(Item item)
         {
             // get the path once!
             // Each call to `item.Paths.Path` will walk up the tree
             string itemPath = item.Paths.Path.ToLower();
 
             // `item.Paths.IsContentItem` is what we can use, but again, this will walk up the tree each time
-            bool isContentItem = itemPath.StartsWith("/sitecore/content/", StringComparison.OrdinalIgnoreCase);
+            bool isContentOrMediaItem = itemPath.StartsWith("/sitecore/content/", StringComparison.OrdinalIgnoreCase) 
+                                        || itemPath.StartsWith("/sitecore/media library/", StringComparison.OrdinalIgnoreCase);
 
-            // the item must be a content item.
-            if (!isContentItem)
+            // the item must be a content or media item.
+            if (!isContentOrMediaItem)
             {
                 return false;
             }
@@ -340,16 +341,16 @@ namespace FieldFallback.Data
             // if there is no configured value...
             if (string.IsNullOrEmpty(SupportedContentPaths))
             {
-                return isContentItem;
+                return isContentOrMediaItem;
             }
 
             // there could be multiple values specified
             IEnumerable<string> paths = SupportedContentPaths.Split(new[] { '|', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             // but there isn't...
-            if (paths.Count() <= 0)
+            if (!paths.Any())
             {
-                return isContentItem;
+                return isContentOrMediaItem;
             }
 
             // see if the item's path starts with a configured value
