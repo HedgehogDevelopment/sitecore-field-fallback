@@ -57,8 +57,6 @@
     <SitecoreAccessGuid>
     </SitecoreAccessGuid>
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
-    <EnableValidations>False</EnableValidations>
-    <ValidationSettingsFilePath>.\Kernel.Sitecore.Master_Release.xml</ValidationSettingsFilePath>
     <PackageName>Kernel.Sitecore.Master</PackageName>
   </PropertyGroup>
   <ItemGroup>

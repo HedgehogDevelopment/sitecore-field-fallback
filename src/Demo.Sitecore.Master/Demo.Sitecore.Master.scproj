@@ -35,10 +35,8 @@
     </SitecoreDeployFolder>
     <SitecoreWebUrl>
     </SitecoreWebUrl>
-    <SitecoreAccessGuid>22d03d0c-6aa2-4d8d-a36c-e20c9e070d5a</SitecoreAccessGuid>
+    <SitecoreAccessGuid></SitecoreAccessGuid>
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
-    <EnableValidations>False</EnableValidations>
-    <ValidationSettingsFilePath>.\Demo.Sitecore.Master_Debug.xml</ValidationSettingsFilePath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
