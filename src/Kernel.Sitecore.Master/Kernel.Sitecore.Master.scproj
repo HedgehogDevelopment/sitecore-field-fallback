@@ -28,6 +28,9 @@
     <SccLocalPath>
     </SccLocalPath>
     <SitecoreDatabase>master</SitecoreDatabase>
+    <EnableCodeGeneration>false</EnableCodeGeneration>
+    <ManageRoles>False</ManageRoles>
+    <AssemblyStatus>Exclude</AssemblyStatus>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,7 +43,7 @@
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.7</PackageVersion>
+    <PackageVersion>1.1.8</PackageVersion>
     <PackageReadme>Field Fallback Module - Kernel
             http://trac.sitecore.net/FieldFallback
 
@@ -58,6 +61,7 @@
     </SitecoreAccessGuid>
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageName>Kernel.Sitecore.Master</PackageName>
+    <PackageExcludeCode>False</PackageExcludeCode>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">

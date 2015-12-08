@@ -35,7 +35,8 @@
     </SitecoreDeployFolder>
     <SitecoreWebUrl>
     </SitecoreWebUrl>
-    <SitecoreAccessGuid></SitecoreAccessGuid>
+    <SitecoreAccessGuid>
+    </SitecoreAccessGuid>
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -51,7 +52,7 @@
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.7</PackageVersion>
+    <PackageVersion>1.1.8</PackageVersion>
     <PackageReadme>Field Fallback Module - Sample
             http://trac.sitecore.net/FieldFallback
 
@@ -62,6 +63,7 @@
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
     <PackageName>Demo.Sitecore.Master</PackageName>
+    <PackageExcludeCode>False</PackageExcludeCode>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
