@@ -84,6 +84,9 @@ namespace FieldFallback.Data
             _supportCache = new FallbackSupportCache();
         }
 
+        static bool _initializingFallback;
+        static object _fallbackInitLock = new object();
+
         public override void Initialize(string name, NameValueCollection config)
         {
             base.Initialize(name, config);
@@ -92,10 +95,29 @@ namespace FieldFallback.Data
             {
                 return;
             }
+            if (!_initializingFallback)
+            {
+                lock (_fallbackInitLock)
+                {
+                    if (!_initializingFallback)
+                    {
+                        try
+                        {
+                            _initializingFallback = true;
 
-            EnableDatabases();
+                            EnableDatabases();
 
-            EnableSites();
+                            EnableSites();
+                        }
+                        finally
+                        {
+                            _initializingFallback = false;
+                        }
+                    }
+                    
+                }
+            }
+            
         }
 
         /// <summary>
