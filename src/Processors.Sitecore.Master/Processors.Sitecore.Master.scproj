@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -28,6 +28,9 @@
     </SccAuxPath>
     <SccLocalPath>
     </SccLocalPath>
+    <EnableCodeGeneration>false</EnableCodeGeneration>
+    <ManageRoles>False</ManageRoles>
+    <AssemblyStatus>Exclude</AssemblyStatus>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,7 +50,7 @@
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
     <PackageAuthor>Hedgehog Development</PackageAuthor>
     <PackagePublisher>Hedgehog Development</PackagePublisher>
-    <PackageVersion>1.1.5</PackageVersion>
+    <PackageVersion>1.2.0</PackageVersion>
     <PackageReadme>Field Fallback Module - Processors
 http://trac.sitecore.net/FieldFallback
 
@@ -64,6 +67,8 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
     <SitecoreAccessGuid>
     </SitecoreAccessGuid>
     <InstallSitecoreConnector>False</InstallSitecoreConnector>
+    <PackageName>Processors.Sitecore.Master</PackageName>
+    <PackageExcludeCode>False</PackageExcludeCode>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
@@ -134,6 +139,12 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Processors\Processors.csproj">
+      <Project>{ea0e220b-26c7-454e-883f-40acbdc53bf4}</Project>
+      <Name>Processors</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ExcludedAssemblies Include="FieldFallback.Kernel.%2a" />

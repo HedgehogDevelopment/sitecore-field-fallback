@@ -15,7 +15,9 @@ using Sitecore.Data.Events;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Events;
 using Sitecore.Globalization;
+using Sitecore.Publishing;
 
 namespace FieldFallback.Data
 {
@@ -73,7 +75,7 @@ namespace FieldFallback.Data
         public FallbackValuesProvider(string databases, string sites)
         {
             Assert.IsNotNullOrEmpty(databases, "databases param cannot be null or empty");
-            Assert.IsNotNullOrEmpty(sites, "databases param cannot be null or empty");
+            Assert.IsNotNullOrEmpty(sites, "sites param cannot be null or empty");
 
             SupportedDatabaseNames = databases.Split(new[] { '|', ' ', ',' });
             SupportedSiteNames = sites.Split(new[] { '|', ' ', ',' });
@@ -81,6 +83,9 @@ namespace FieldFallback.Data
             _siteManager = new SiteManager();
             _supportCache = new FallbackSupportCache();
         }
+
+        static bool _initializingFallback;
+        static object _fallbackInitLock = new object();
 
         public override void Initialize(string name, NameValueCollection config)
         {
@@ -90,10 +95,29 @@ namespace FieldFallback.Data
             {
                 return;
             }
+            if (!_initializingFallback)
+            {
+                lock (_fallbackInitLock)
+                {
+                    if (!_initializingFallback)
+                    {
+                        try
+                        {
+                            _initializingFallback = true;
 
-            EnableDatabases();
+                            EnableDatabases();
 
-            EnableSites();
+                            EnableSites();
+                        }
+                        finally
+                        {
+                            _initializingFallback = false;
+                        }
+                    }
+                    
+                }
+            }
+            
         }
 
         /// <summary>
@@ -219,7 +243,7 @@ namespace FieldFallback.Data
                 bool hasFallbackValue = (field.Value == fallbackValue);
 
                 Logger.Debug("{0}", hasFallbackValue);
-                return hasFallbackValue;                
+                return hasFallbackValue;
             }
             finally
             {
@@ -294,7 +318,7 @@ namespace FieldFallback.Data
                 // lets cache this item as skipped to prevent future checks on it
                 SkipItemCache.SetSkippedItem(item);
             }
-            else if (!IsItemInSupportedContentPath(item)) // it must be under /sitecore/content
+            else if (!IsItemInSupportedPath(item)) // it must be under /sitecore/content or /sitecore/media library
             {
                 Logger.Debug("Item {0} is in an invalid path", item.Name);
                 isSupported = false;
@@ -320,17 +344,18 @@ namespace FieldFallback.Data
             return SupportedDatabaseNames.Contains(item.Database.Name, StringComparer.OrdinalIgnoreCase);
         }
 
-        private bool IsItemInSupportedContentPath(Item item)
+        private bool IsItemInSupportedPath(Item item)
         {
             // get the path once!
             // Each call to `item.Paths.Path` will walk up the tree
             string itemPath = item.Paths.Path.ToLower();
 
             // `item.Paths.IsContentItem` is what we can use, but again, this will walk up the tree each time
-            bool isContentItem = itemPath.StartsWith("/sitecore/content/", StringComparison.OrdinalIgnoreCase);
+            bool isContentOrMediaItem = itemPath.StartsWith("/sitecore/content/", StringComparison.OrdinalIgnoreCase) 
+                                        || itemPath.StartsWith("/sitecore/media library/", StringComparison.OrdinalIgnoreCase);
 
-            // the item must be a content item.
-            if (!isContentItem)
+            // the item must be a content or media item.
+            if (!isContentOrMediaItem)
             {
                 return false;
             }
@@ -338,16 +363,16 @@ namespace FieldFallback.Data
             // if there is no configured value...
             if (string.IsNullOrEmpty(SupportedContentPaths))
             {
-                return isContentItem;
+                return isContentOrMediaItem;
             }
 
             // there could be multiple values specified
             IEnumerable<string> paths = SupportedContentPaths.Split(new[] { '|', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             // but there isn't...
-            if (paths.Count() <= 0)
+            if (!paths.Any())
             {
-                return isContentItem;
+                return isContentOrMediaItem;
             }
 
             // see if the item's path starts with a configured value
@@ -403,11 +428,12 @@ namespace FieldFallback.Data
         /// <param name="database">The database.</param>
         private void InitializeEventHandlers(Database database)
         {
-            Logger.Info("Instatiating event handlers for database: {0}", database.Name);
+            Logger.Info("Instantiating event handlers for database: {0}", database.Name);
             Sitecore.Data.Engines.DataEngine dataEngine = database.Engines.DataEngine;
 
             // Hook into the Delete/Remove/Saved events to clear caches
             dataEngine.DeletedItem += DataEngine_DeletedItem;
+            dataEngine.DeletedItemRemote += DataEngine_DeletedItemRemote;
             dataEngine.RemovedVersion += DataEngine_RemoveVersion;
 
             /* 
@@ -424,14 +450,19 @@ namespace FieldFallback.Data
             dataEngine.CopiedItem += DataEngine_CopiedItem;
             dataEngine.SavingItem += DataEngine_SavingItem;
             dataEngine.SavedItem += DataEngine_SavedItem;
+            dataEngine.SavedItemRemote += DataEngine_SavedItemRemote;
             dataEngine.CreatingItem += DataEngine_CreatingItem;
             dataEngine.CreatedItem += DataEngine_CreatedItem;
             dataEngine.AddingFromTemplate += DataEngine_AddingFromTemplate;
             dataEngine.AddedFromTemplate += DataEngine_AddedFromTemplate;
             dataEngine.AddingVersion += DataEngine_AddingVersion;
             dataEngine.AddedVersion += DataEngine_AddedVersion;
+
+            // The delivery nodes must subscribe to the end publish event... 
+            // we need to invalidate the cache of published items
+            Event.Subscribe("publish:end:remote", new System.EventHandler(this.OnPublishEndRemoteHandled));
         }
-        
+
         private void DataEngine_RemoveVersion(object sender, ExecutedEventArgs<RemoveVersionCommand> e)
         {
             Cache.RemoveItem(e.Command.Item);
@@ -441,6 +472,12 @@ namespace FieldFallback.Data
         {
             Cache.RemoveTree(e.Command.Item);
             SkipItemCache.UnSkipItem(e.Command.Item);
+        }
+
+        private void DataEngine_DeletedItemRemote(object sender, ItemDeletedRemoteEventArgs e)
+        {
+            Cache.RemoveTree(e.Item);
+            SkipItemCache.UnSkipItem(e.Item);
         }
 
         private void DataEngine_CopyingItem(object sender, ExecutingEventArgs<CopyItemCommand> e)
@@ -471,6 +508,17 @@ namespace FieldFallback.Data
             ExitDisabledState("Saved item '{0}'", e.Command.Item.Name);
         }
 
+        private void DataEngine_SavedItemRemote(object sender, ItemSavedRemoteEventArgs e)
+        {
+            if (e.Changes.HasFieldsChanged)
+            {
+                foreach (FieldChange change in e.Changes.FieldChanges)
+                {
+                    Cache.RemoveItemField(e.Item, change.FieldID);
+                }
+            }
+        }
+
         private void DataEngine_CreatingItem(object sender, ExecutingEventArgs<CreateItemCommand> e)
         {
             EnterDisabledState("Creating item '{0}'", e.Command.ItemName);
@@ -499,6 +547,37 @@ namespace FieldFallback.Data
         private void DataEngine_AddedVersion(object sender, ExecutedEventArgs<AddVersionCommand> e)
         {
             ExitDisabledState("Added Version of item '{0}' ('{1}:{2}')", e.Command.Item.Name, e.Command.Item.Language.Name, e.Command.Item.Version.Number);
+        }
+
+        private void OnPublishEndRemoteHandled(object sender, EventArgs args)
+        {
+            PublishEndRemoteEventArgs remoteArgs = args as PublishEndRemoteEventArgs;
+            
+            bool deep = remoteArgs.Deep;
+            ID rootItemID = ID.Parse(remoteArgs.RootItemId);
+
+            // We can't rely on the name of the target database (as the publishing target name in the CM may not match a DB name in the CD environment)
+            // Iterate over each supported DB and try to get the item
+            foreach (string db in SupportedDatabaseNames)
+            {
+                Database publishingTarget = Sitecore.Configuration.Factory.GetDatabase(db);
+                if (publishingTarget != null)
+                {
+                    Item publishedItem = publishingTarget.GetItem(rootItemID);
+
+                    if (publishedItem != null)
+                    {
+                        if (deep)
+                        {
+                            Cache.RemoveTree(publishedItem);
+                        }
+                        else
+                        {
+                            Cache.RemoveItem(publishedItem);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
