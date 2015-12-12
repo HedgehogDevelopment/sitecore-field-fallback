@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Xml;
@@ -6,6 +7,7 @@ using FieldFallback.Data;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Web;
 
 namespace FieldFallback.Processors.Data.Items
@@ -103,15 +105,35 @@ namespace FieldFallback.Processors.Data.Items
                 // try to get this fields as an XML field
                 // Original version of this field was key/value pair
                 // It was converted to XML to support advanced options
-                XmlField test = InnerItem.Fields[FallbackFields];
-                if (test.Xml == null)
+                XmlField testXmlField = null;
+                try
                 {
-                    ParseNameValueConfiguration(InnerItem[FallbackFields], _fallbackDefinition);
+                    string test = string.Empty;
+                    if (InnerItem.Fields[FallbackFields] != null)
+                    {
+                        test = InnerItem.Fields[FallbackFields].Value;
+                    }
+                    XmlDocument testXmlDocument = new XmlDocument();
+                    testXmlDocument.LoadXml(test); //will throw XmlException if test != XML
+                    testXmlField = InnerItem.Fields[FallbackFields];
+                }
+                catch (XmlException e)
+                {
+                    //Error trying to get field as XML
+                    //Must be a key/value pair
+                    //Log.Info("Fallback field is not XML", e);
+                }
+
+                if (testXmlField != null && testXmlField.Xml != null)
+                {
+                    ParseXmlConfiguration(testXmlField, _fallbackDefinition);
                 }
                 else
                 {
-                    ParseXmlConfiguration(test, _fallbackDefinition);
+                    ParseNameValueConfiguration(InnerItem[FallbackFields], _fallbackDefinition);
                 }
+
+                
             }
             FallbackDefinition = _fallbackDefinition;
         }
