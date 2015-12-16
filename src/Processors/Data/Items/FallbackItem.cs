@@ -105,37 +105,47 @@ namespace FieldFallback.Processors.Data.Items
                 // try to get this fields as an XML field
                 // Original version of this field was key/value pair
                 // It was converted to XML to support advanced options
-                XmlField testXmlField = null;
-                try
+                bool isFieldXml = false;
+                if (IsXml(InnerItem.Fields[FallbackFields]))
                 {
-                    string test = string.Empty;
-                    if (InnerItem.Fields[FallbackFields] != null)
+                    XmlField testXmlField = InnerItem.Fields[FallbackFields];
+                    if (testXmlField != null && testXmlField.Xml != null)
                     {
-                        test = InnerItem.Fields[FallbackFields].Value;
+                        ParseXmlConfiguration(testXmlField, _fallbackDefinition);
+                        isFieldXml = true;
                     }
-                    XmlDocument testXmlDocument = new XmlDocument();
-                    testXmlDocument.LoadXml(test); //will throw XmlException if test != XML
-                    testXmlField = InnerItem.Fields[FallbackFields];
                 }
-                catch (XmlException e)
-                {
-                    //Error trying to get field as XML
-                    //Must be a key/value pair
-                    //Log.Info("Fallback field is not XML", e);
-                }
-
-                if (testXmlField != null && testXmlField.Xml != null)
-                {
-                    ParseXmlConfiguration(testXmlField, _fallbackDefinition);
-                }
-                else
+                
+                if(!isFieldXml)
                 {
                     ParseNameValueConfiguration(InnerItem[FallbackFields], _fallbackDefinition);
                 }
-
                 
             }
             FallbackDefinition = _fallbackDefinition;
+        }
+
+        private bool IsXml(Field testField)
+        {
+            try
+            {
+                string test = string.Empty;
+                if (testField != null)
+                {
+                    test = testField.Value;
+                }
+                XmlDocument testXmlDocument = new XmlDocument();
+                testXmlDocument.LoadXml(test); //will throw XmlException if test != XML
+                return true;//testField is XML
+            }
+            catch (XmlException)
+            {
+                //Error trying to get field as XML
+                //Must be a key/value pair
+            }
+
+            return false;
+
         }
 
         private void ParseNameValueConfiguration(string oldConfigurationValue, Dictionary<ID, Setting> settings)
