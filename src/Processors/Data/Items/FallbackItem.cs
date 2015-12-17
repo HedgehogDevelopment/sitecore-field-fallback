@@ -105,18 +105,13 @@ namespace FieldFallback.Processors.Data.Items
                 // try to get this fields as an XML field
                 // Original version of this field was key/value pair
                 // It was converted to XML to support advanced options
-                bool isFieldXml = false;
-                if (IsXml(InnerItem.Fields[FallbackFields]))
+                XmlDocument xmlDocument = null;
+                if (TryParseXml(InnerItem.Fields[FallbackFields].Value, out xmlDocument))
                 {
-                    XmlField testXmlField = InnerItem.Fields[FallbackFields];
-                    if (testXmlField != null && testXmlField.Xml != null)
-                    {
-                        ParseXmlConfiguration(testXmlField, _fallbackDefinition);
-                        isFieldXml = true;
-                    }
+                    ParseXmlConfiguration(xmlDocument, _fallbackDefinition);
                 }
                 
-                if(!isFieldXml)
+                if(xmlDocument == null)
                 {
                     ParseNameValueConfiguration(InnerItem[FallbackFields], _fallbackDefinition);
                 }
@@ -125,18 +120,17 @@ namespace FieldFallback.Processors.Data.Items
             FallbackDefinition = _fallbackDefinition;
         }
 
-        private bool IsXml(Field testField)
+        private bool TryParseXml(string xmlString, out XmlDocument xmlDocument)
         {
             try
             {
-                string test = string.Empty;
-                if (testField != null)
+                if (!string.IsNullOrEmpty(xmlString))
                 {
-                    test = testField.Value;
+                    XmlDocument testXmlDocument = new XmlDocument();
+                    testXmlDocument.LoadXml(xmlString); //will throw XmlException if xmlField != XML
+                    xmlDocument = testXmlDocument;
+                    return true; //xmlField is XML
                 }
-                XmlDocument testXmlDocument = new XmlDocument();
-                testXmlDocument.LoadXml(test); //will throw XmlException if test != XML
-                return true;//testField is XML
             }
             catch (XmlException)
             {
@@ -144,8 +138,8 @@ namespace FieldFallback.Processors.Data.Items
                 //Must be a key/value pair
             }
 
+            xmlDocument = null;
             return false;
-
         }
 
         private void ParseNameValueConfiguration(string oldConfigurationValue, Dictionary<ID, Setting> settings)
@@ -176,7 +170,7 @@ namespace FieldFallback.Processors.Data.Items
             }
         }
 
-        private void ParseXmlConfiguration(XmlField fallbackField, Dictionary<ID, Setting> settings)
+        private void ParseXmlConfiguration(XmlDocument fallbackXml, Dictionary<ID, Setting> settings)
         {
             // complex structure...
             // TODO: Create a nice Sitecore field editing interface for this
@@ -187,7 +181,7 @@ namespace FieldFallback.Processors.Data.Items
             ///     ...
             /// </fallback>
 
-            foreach (XmlNode child in fallbackField.Xml.FirstChild.ChildNodes)
+            foreach (XmlNode child in fallbackXml.FirstChild.ChildNodes)
             {
                 XmlAttribute target = child.Attributes["target"];
                 XmlAttribute source = child.Attributes["source"];
