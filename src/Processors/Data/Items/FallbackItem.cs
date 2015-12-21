@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Xml;
@@ -6,6 +7,7 @@ using FieldFallback.Data;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Web;
 
 namespace FieldFallback.Processors.Data.Items
@@ -103,17 +105,41 @@ namespace FieldFallback.Processors.Data.Items
                 // try to get this fields as an XML field
                 // Original version of this field was key/value pair
                 // It was converted to XML to support advanced options
-                XmlField test = InnerItem.Fields[FallbackFields];
-                if (test.Xml == null)
+                XmlDocument xmlDocument = null;
+                if (TryParseXml(InnerItem.Fields[FallbackFields].Value, out xmlDocument))
+                {
+                    ParseXmlConfiguration(xmlDocument, _fallbackDefinition);
+                }
+                
+                if(xmlDocument == null)
                 {
                     ParseNameValueConfiguration(InnerItem[FallbackFields], _fallbackDefinition);
                 }
-                else
-                {
-                    ParseXmlConfiguration(test, _fallbackDefinition);
-                }
+                
             }
             FallbackDefinition = _fallbackDefinition;
+        }
+
+        private bool TryParseXml(string xmlString, out XmlDocument xmlDocument)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(xmlString))
+                {
+                    XmlDocument testXmlDocument = new XmlDocument();
+                    testXmlDocument.LoadXml(xmlString); //will throw XmlException if xmlField != XML
+                    xmlDocument = testXmlDocument;
+                    return true; //xmlField is XML
+                }
+            }
+            catch (XmlException)
+            {
+                //Error trying to get field as XML
+                //Must be a key/value pair
+            }
+
+            xmlDocument = null;
+            return false;
         }
 
         private void ParseNameValueConfiguration(string oldConfigurationValue, Dictionary<ID, Setting> settings)
@@ -144,7 +170,7 @@ namespace FieldFallback.Processors.Data.Items
             }
         }
 
-        private void ParseXmlConfiguration(XmlField fallbackField, Dictionary<ID, Setting> settings)
+        private void ParseXmlConfiguration(XmlDocument fallbackXml, Dictionary<ID, Setting> settings)
         {
             // complex structure...
             // TODO: Create a nice Sitecore field editing interface for this
@@ -155,7 +181,7 @@ namespace FieldFallback.Processors.Data.Items
             ///     ...
             /// </fallback>
 
-            foreach (XmlNode child in fallbackField.Xml.FirstChild.ChildNodes)
+            foreach (XmlNode child in fallbackXml.FirstChild.ChildNodes)
             {
                 XmlAttribute target = child.Attributes["target"];
                 XmlAttribute source = child.Attributes["source"];
