@@ -95,7 +95,6 @@ namespace FieldFallback.Data
             {
                 return;
             }
-
             if (!_initializingFallback)
             {
                 lock (_fallbackInitLock)
@@ -115,9 +114,10 @@ namespace FieldFallback.Data
                             _initializingFallback = false;
                         }
                     }
-
+                    
                 }
             }
+            
         }
 
         /// <summary>
