@@ -177,3 +177,5 @@ lib/Sitecore*.dll
 
 # we want to include the root 'release' directory since that is where we supply the latest release
 !/release/
+src/packages/Sitecore.6.5.0.120706/Sitecore.6.5.0.120706.nupkg
+src/packages/Sitecore.6.5.0.120706/tools/install.ps1
