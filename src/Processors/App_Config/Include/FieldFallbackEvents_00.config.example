@@ -1,8 +1,8 @@
 ﻿<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
   <sitecore>
     <events>
-      <event name="item:created">
-        <handler type="FieldFallback.Processors.Events.FieldFallBackItemCreatedHandler, FieldFallback.Processors" method="OnCreateItem">
+      <event name="item:saved">
+        <handler type="FieldFallback.Processors.Events.FieldFallBackItemCreatedHandler, FieldFallback.Processors" method="OnItemSaved">
         </handler>
       </event>
       <event name="item:deleted">
@@ -12,7 +12,7 @@
     </events>
 	<settings>
 	 <!-- Location of default templates that are used by the Fallback Items-->
-      <setting name="Fallback.Default.Teamplate.Location" value ="/sitecore/templates/FieldFallbackDemo/DefaultTemplatesDemoFolder"/>
+      <setting name="Fallback.Default.Template.Location" value ="/sitecore/templates/FieldFallbackDemo/DefaultTemplatesDemoFolder"/>
 
       <!-- Location of the default items that will be created after the templates are created-->
       <setting name="Fallback.Default.Item.Location" value ="/sitecore/Content/FieldFallbackDemo/DefaultItemsDemoFolder"/>
