@@ -1,4 +1,5 @@
 ﻿using Sitecore.Configuration;
+using Sitecore.Data.Items;
 
 namespace FieldFallback.Processors.Configuration
 {
@@ -29,6 +30,36 @@ namespace FieldFallback.Processors.Configuration
         public static string DefaultItemLocation
         {
             get { return Settings.GetSetting("Fallback.Default.Item.Location"); }
+        }
+
+        /// <summary>
+        ///     Gets the database name from the event config file
+        ///     to compare the item that we are working with to.
+        ///     We only work with the item if it is in the database
+        ///     that is set in the config file
+        /// </summary>
+        ///
+        /// <value>
+        ///     The database set in the config file to work with 
+        ///     the items.
+        /// </value>
+
+        public static string Database
+        {
+            get { return Settings.GetSetting("Database"); }
+        }
+        /// <summary>
+        ///     Gets the content item suffix that will be used when creating
+        ///     the content item based off of the template.
+        /// </summary>
+        ///
+        /// <value>
+        ///     The content item suffix appended to the Template Name.
+        /// </value>
+
+        public static string ContentItemSuffix
+        {
+            get { return " Defaults"; }
         }
     }
 }
