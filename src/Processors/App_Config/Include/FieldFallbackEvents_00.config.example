@@ -1,7 +1,7 @@
 ﻿<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
   <sitecore>
     <events>
-      <event name="item:saved">
+      <event name="item:created">
         <handler type="FieldFallback.Processors.Events.FieldFallBackItemCreatedHandler, FieldFallback.Processors" method="OnItemSaved">
         </handler>
       </event>
@@ -16,6 +16,9 @@
 
       <!-- Location of the default items that will be created after the templates are created-->
       <setting name="Fallback.Default.Item.Location" value ="/sitecore/Content/FieldFallbackDemo/DefaultItemsDemoFolder"/>
+      
+      <!-- Database to process events in-->
+      <setting name="Database" value="master"/>
     </settings>
   </sitecore>
 </configuration>
