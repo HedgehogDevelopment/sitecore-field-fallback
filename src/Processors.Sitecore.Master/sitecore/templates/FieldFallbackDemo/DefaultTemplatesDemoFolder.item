@@ -1,0 +1,58 @@
+----item----
+version: 1
+id: {F0BB8D81-5B69-429C-939B-745DDEE22A5A}
+database: master
+path: /sitecore/templates/FieldFallbackDemo/DefaultTemplatesDemoFolder
+parent: {FCB3EB2F-2EAE-45E0-9653-5CC9DF7F114B}
+name: DefaultTemplatesDemoFolder
+master: {00000000-0000-0000-0000-000000000000}
+template: {0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}
+templatekey: Template Folder
+
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 77
+
+{78CF88BA-6957-4366-8368-12F3CED0184F}|{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}
+----version----
+language: en
+version: 1
+revision: 32325341-7696-44b1-bad6-a26ec83db7be
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20160405T144300
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+32325341-7696-44b1-bad6-a26ec83db7be
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20160406T014654:635955040144856516
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
