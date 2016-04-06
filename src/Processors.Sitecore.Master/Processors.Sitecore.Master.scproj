@@ -85,6 +85,13 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
       <ItemDeployment>DeployOnce</ItemDeployment>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\FieldFallbackDemo.item">
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\FieldFallbackDemo\DefaultTemplatesDemoFolder.item">
+      <ItemDeployment>DeployOnce</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\templates\System.item">
       <Icon>/temp/IconCache/Applications/16x16/folder_gear.png</Icon>
       <ItemDeployment>DeployOnce</ItemDeployment>
@@ -94,6 +101,9 @@ http://TeamDevelopmentForSitecore.com</PackageReadme>
       <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
       <ItemDeployment>DeployOnce</ItemDeployment>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Fallback Defaults Folder.item">
+      <ItemDeployment>DeployOnce</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\templates\System\Templates\Fallback template.item">
       <Icon>/temp/IconCache/Applications/16x16/form_blue.png</Icon>
