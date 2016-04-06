@@ -135,7 +135,7 @@ namespace FieldFallback.Processors.Events
                 else if (item.IsFolderTemplate())
                 {
                     //Get the base folder template
-                    TemplateItem template = item.Database.GetItem("{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}");
+                    TemplateItem template = item.Database.GetItem(Config.FallbackDefaultsFolderID);
                     parentItem.Add(item.Name, template);
                 }
                 
