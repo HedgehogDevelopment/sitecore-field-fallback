@@ -151,6 +151,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
@@ -172,6 +173,7 @@
     <Compile Include="DefaultValuesItemProcessor.cs" />
     <Compile Include="Events\FieldFallBackItemCreatedHandler.cs" />
     <Compile Include="Events\FieldFallBackItemDeletedHandler.cs" />
+    <Compile Include="Extensions\ItemExtension.cs" />
     <Compile Include="LateralFieldFallbackProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
