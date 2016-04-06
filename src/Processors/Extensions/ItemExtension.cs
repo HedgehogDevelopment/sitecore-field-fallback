@@ -29,7 +29,7 @@ namespace FieldFallback.Processors.Extensions
         ///     The parent content path of the item that
         ///     is going to be created.
         /// </returns>
-        public static string GetParentContentPath(this TemplateItem item)
+        public static string GetParentContentPath(this Item item)
         {
             Item workingItem = (Item) item;
             string itemPath =
@@ -43,20 +43,36 @@ namespace FieldFallback.Processors.Extensions
         }
 
         /// <summary>
-        ///     Query if 'item' is template.
+        ///     Query if 'item' is TemplateItem or a TemplateFolder .
         /// </summary>
         /// <param name="item">
         ///     The Sitecore item to evaluate
         ///     if it is a template.
         /// </param>
         /// <returns>
-        ///     true if the item is a template, false if it is not.
+        ///     true if the item is a TemplateItem or TemplateFolder, 
+        ///     false if it is not.
         /// </returns>
         public static bool IsTemplate(this Item item)
         {
-            return item.TemplateID.ToString() == TemplateIDs.Template.ToString();
-        }
+            //Check if item it a TemplateItem
+            if (item.TemplateID.ToString() == TemplateIDs.Template.ToString())
+            {
+                return true;
+            }
 
+            return false;
+        }
+        public static bool IsFolderTemplate(this Item item)
+        {
+
+            //Check if item it a TemplateFolder
+            if (item.TemplateID.ToString() == TemplateIDs.TemplateFolder.ToString())
+            {
+                return true;
+            }
+            return false;
+        }
         public static bool IsInConfigDatabase(this Item item)
         {
             if (Config.Database == item.Database.Name)
