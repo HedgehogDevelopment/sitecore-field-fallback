@@ -61,5 +61,20 @@ namespace FieldFallback.Processors.Configuration
         {
             get { return " Defaults"; }
         }
+
+        /// <summary>
+        ///     Gets the Item ID of the fallback defaults folder from the
+        ///     config file.
+        /// </summary>
+        ///
+        /// <value>
+        ///     The Item ID of the fallback defaults folder located under
+        ///     .
+        /// </value>
+
+        public static string FallbackDefaultsFolderID
+        {
+            get { return Settings.GetSetting("Fallback.Defaults.Folder.ID"); }
+        }
     }
 }
