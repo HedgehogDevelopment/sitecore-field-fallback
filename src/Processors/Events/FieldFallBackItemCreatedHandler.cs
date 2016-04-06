@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Threading;
 using FieldFallback.Processors.Configuration;
+using FieldFallback.Processors.Extensions;
 using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
 using Sitecore.SecurityModel;
-using FieldFallback.Processors.Extensions;
-using Sitecore.Data.Templates;
-using Sitecore.Update.Data.Items;
 
 namespace FieldFallback.Processors.Events
 {
@@ -19,11 +17,10 @@ namespace FieldFallback.Processors.Events
     ///     of templates that are created. It is documented
     ///     throughout. However, one key point is item:created
     ///     was chosen over item:saved specifically. Also note
-    ///     that there is a background thread that runs on a 
+    ///     that there is a background thread that runs on a
     ///     delay to create the item to ensure the SaveUI
     ///     Pipeline has time to process saving the TemplateItem
     /// </summary>
-
     public class FieldFallBackItemCreatedHandler
     {
         /// <summary>
@@ -32,10 +29,8 @@ namespace FieldFallback.Processors.Events
         ///     template in the same location in the content tree
         ///     as it is in the template tree.
         /// </summary>
-        ///
         /// <param name="sender">   Source of the event. </param>
         /// <param name="args">     Event information to send to registered event handlers. </param>
-
         public void OnItemSaved(object sender, EventArgs args)
         {
             // Get the item created event arguments.
@@ -43,9 +38,9 @@ namespace FieldFallback.Processors.Events
             // The purpose of using the create over the save event is the 
             // complexity of the SaveUI Pipeline may cause adverse affects
             // to creating the defaults for the dynamic template creation
-            ItemCreatedEventArgs eventArgs = 
+            ItemCreatedEventArgs eventArgs =
                 Event.ExtractParameter(args, 0) as ItemCreatedEventArgs;
-            
+
             Assert.IsNotNull(eventArgs, "eventArgs");
 
             if (eventArgs == null)
@@ -70,7 +65,7 @@ namespace FieldFallback.Processors.Events
             {
                 return;
             }
-            
+
             //If our new item is in our default template location,
             // we are creating a template. Since we are creating a template,
             // we need to create a default item to match it.
@@ -97,12 +92,9 @@ namespace FieldFallback.Processors.Events
         /// <summary>
         ///     Creates content item based off of the template.
         /// </summary>
-        ///
-        ///
-        /// <param name="item"> 
-        ///     The TemplateItem that was just created. 
+        /// <param name="item">
+        ///     The TemplateItem that was just created.
         /// </param>
-
         private void CreateContentItem(Item item)
         {
             //Create a new item in the item location based off of the template
@@ -111,9 +103,9 @@ namespace FieldFallback.Processors.Events
             {
                 //Get the database context
                 Database context = item.Database;
-                
+
                 //Get the parent item of the item we need to create
-                Item parentItem = context.Items.GetItem(item.GetParentContentPath());
+                Item parentItem = context.Items.GetItem(item.GetDefaultContentPath());
 
                 if (parentItem == null)
                 {
@@ -121,7 +113,7 @@ namespace FieldFallback.Processors.Events
                 }
 
                 parentItem.Editing.BeginEdit();
-                
+
                 string newItemName = item.Name + Config.ContentItemSuffix;
 
                 // Create a new item based off of the template 
@@ -138,9 +130,9 @@ namespace FieldFallback.Processors.Events
                     TemplateItem template = item.Database.GetItem(Config.FallbackDefaultsFolderID);
                     parentItem.Add(item.Name, template);
                 }
-                
+
                 parentItem.Editing.EndEdit();
             }
         }
     }
-}   
+}
