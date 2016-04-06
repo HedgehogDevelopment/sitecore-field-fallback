@@ -7,15 +7,14 @@ namespace FieldFallback.Processors.Extensions
 {
     public static class ItemExtension
     {
-        public static string GetTemplatedContentItem(this TemplateItem item)
+        public static string GetFullContentItemPath(this TemplateItem item)
         {
             // Path of content item dynamically created by 
             // FieldFallback Processor Event
-            string itemPath = string.Format("{0}{1}{2}",
-                GetParentContentPath(item),
+            string itemPath = string.Format("{0}/{1}{2}",
+                GetDefaultContentPath(item),
                 item.Name,
                 Config.ContentItemSuffix);
-            //Item createdItem = templateItem.Database.GetItem(itemPath);
 
             return itemPath;
         }
@@ -29,11 +28,10 @@ namespace FieldFallback.Processors.Extensions
         ///     The parent content path of the item that
         ///     is going to be created.
         /// </returns>
-        public static string GetParentContentPath(this Item item)
+        public static string GetDefaultContentPath(this Item item)
         {
-            Item workingItem = (Item) item;
             string itemPath =
-                workingItem.Paths.ParentPath
+                item.Paths.ParentPath
                     //Remove the template path
                     .Substring(Config.DefaultTemplateLocation.Length)
                     //Insert the item location
