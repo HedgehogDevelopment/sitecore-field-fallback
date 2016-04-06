@@ -8,6 +8,8 @@ using Sitecore.Diagnostics;
 using Sitecore.Events;
 using Sitecore.SecurityModel;
 using FieldFallback.Processors.Extensions;
+using Sitecore.Data.Templates;
+using Sitecore.Update.Data.Items;
 
 namespace FieldFallback.Processors.Events
 {
@@ -64,11 +66,11 @@ namespace FieldFallback.Processors.Events
             // Check to see that the item is a template
             // If it is not a template, we do not need to 
             // process it.
-            if (!item.IsTemplate())
+            if (!(item.IsTemplate() || item.IsFolderTemplate()))
             {
                 return;
             }
-
+            
             //If our new item is in our default template location,
             // we are creating a template. Since we are creating a template,
             // we need to create a default item to match it.
@@ -101,7 +103,7 @@ namespace FieldFallback.Processors.Events
         ///     The TemplateItem that was just created. 
         /// </param>
 
-        private void CreateContentItem(TemplateItem item)
+        private void CreateContentItem(Item item)
         {
             //Create a new item in the item location based off of the template
             //that was just created. 
@@ -119,16 +121,24 @@ namespace FieldFallback.Processors.Events
                 }
 
                 parentItem.Editing.BeginEdit();
-
-
-                //Get the template to base the template 
-                TemplateItem template = item.Database.GetTemplate(item.ID);
-
+                
                 string newItemName = item.Name + Config.ContentItemSuffix;
 
-                //Create a new item based off of the template just created
-                parentItem.Add(newItemName, template);
-
+                // Create a new item based off of the template 
+                // just created     
+                if (item.IsTemplate())
+                {
+                    //Get the template to base the template 
+                    TemplateItem template = item.Database.GetTemplate(item.ID);
+                    parentItem.Add(newItemName, template);
+                }
+                else if (item.IsFolderTemplate())
+                {
+                    //Get the base folder template
+                    TemplateItem template = item.Database.GetItem("{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}");
+                    parentItem.Add(item.Name, template);
+                }
+                
                 parentItem.Editing.EndEdit();
             }
         }
