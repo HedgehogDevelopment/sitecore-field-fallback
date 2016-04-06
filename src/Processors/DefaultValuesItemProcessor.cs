@@ -1,11 +1,8 @@
-﻿using System;
-using FieldFallback.Pipelines.FieldFallbackPipeline;
-using FieldFallback.Processors.Data.Fields;
-using Sitecore.Data;
+﻿using FieldFallback.Pipelines.FieldFallbackPipeline;
+using FieldFallback.Processors.Extensions;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
-using Sitecore.Data.Templates;
-using Sitecore.Events;
+using Sitecore.Diagnostics;
 using Sitecore.SecurityModel;
 
 namespace FieldFallback.Processors
@@ -14,14 +11,33 @@ namespace FieldFallback.Processors
     {
         protected override bool IsEnabledForField(Field field)
         {
-            //This processor is always enabled because it is handled
-            // by create and delete events
+            //This processor is always enabled because it is processed
+            // for all fields that are part of the Item being created.
             return true;
         }
 
         protected override string GetFallbackValue(FieldFallbackPipelineArgs args)
         {
-            return null; 
+            Assert.IsNotNull(args.Field, "Field is null");
+            Item fallbackItem = GetFallbackItem(args.Field);
+
+            // if we have an Default Item with the field...
+            if (fallbackItem != null && fallbackItem.Fields[args.Field.ID] != null)
+            {
+                // get the value of the default item.
+                // Standard Values are an acceptable value!
+                return fallbackItem.Fields[args.Field.ID].GetValueSafe(true, false, false);
+            }
+            return null;
+        }
+
+        private Item GetFallbackItem(Field field)
+        {
+            using (new SecurityDisabler())
+            {
+                TemplateItem currentTemplate = field.Database.GetTemplate(field.Item.TemplateID);
+                return field.Database.GetItem(currentTemplate.GetFullContentItemPath());
+            }
         }
     }
 }
