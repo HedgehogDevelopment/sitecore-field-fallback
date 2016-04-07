@@ -170,7 +170,7 @@
     <Compile Include="Data\Fields\TemplateFallbackFieldItem.cs" />
     <Compile Include="Data\Items\FallbackItem.cs" />
     <Compile Include="DefaultFieldFallbackProcessor.cs" />
-    <Compile Include="DefaultValuesItemProcessor.cs" />
+    <Compile Include="DefaultValuesFallbackProcessor.cs" />
     <Compile Include="Events\FieldFallBackItemCreatedHandler.cs" />
     <Compile Include="Events\FieldFallBackItemDeletedHandler.cs" />
     <Compile Include="Extensions\ItemExtension.cs" />

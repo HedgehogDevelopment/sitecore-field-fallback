@@ -7,7 +7,7 @@ using Sitecore.SecurityModel;
 
 namespace FieldFallback.Processors
 {
-    public class DefaultValuesItemProcessor : FieldFallbackProcessor
+    public class DefaultValuesFallbackProcessor : FieldFallbackProcessor
     {
         protected override bool IsEnabledForField(Field field)
         {
