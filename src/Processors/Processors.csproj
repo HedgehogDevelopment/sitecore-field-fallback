@@ -193,7 +193,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\FieldFallbackEvents_00.config.example" />
+    <Content Include="App_Config\Include\FieldFallbackDefaults_00.config.example" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
