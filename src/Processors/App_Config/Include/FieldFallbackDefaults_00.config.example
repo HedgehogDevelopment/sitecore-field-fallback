@@ -5,10 +5,10 @@
         <handler type="FieldFallback.Processors.Events.FieldFallBackItemCreatedHandler, FieldFallback.Processors" method="OnItemSaved">
         </handler>
       </event>
-      <event name="item:deleting">
+      <!--<event name="item:deleting">
         <handler type="FieldFallback.Processors.Events.FieldFallBackItemDeletedHandler, FieldFallback.Processors" method="OnDeleteItem">
         </handler>
-      </event>
+      </event>-->
     </events>
 	<settings>
 	 <!-- Location of default templates that are used by the Fallback Items-->
