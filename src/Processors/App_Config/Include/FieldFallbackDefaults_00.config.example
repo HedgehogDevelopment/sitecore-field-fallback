@@ -5,21 +5,24 @@
         <handler type="FieldFallback.Processors.Events.FieldFallBackItemCreatedHandler, FieldFallback.Processors" method="OnItemSaved">
         </handler>
       </event>
-      <!--<event name="item:deleting">
-        <handler type="FieldFallback.Processors.Events.FieldFallBackItemDeletedHandler, FieldFallback.Processors" method="OnDeleteItem">
-        </handler>
-      </event>-->
     </events>
-	<settings>
-	 <!-- Location of default templates that are used by the Fallback Items-->
+    <processors>
+      <uiDeleteItems>
+        <processor 	type="FieldFallback.Processors.Pipeline.DeleteItems,FieldFallback.Processors" method="ProcessDeleteItems"
+					patch:before="processor[@type='Sitecore.Shell.Framework.Pipelines.DeleteItems,Sitecore.Kernel' and @method='CheckTemplateLinks']"/>
+      </uiDeleteItems>
+    </processors>
+    <settings>
+
+      <!-- Location of default templates that are used by the Fallback Items-->
       <setting name="Fallback.Default.Template.Location" value ="/sitecore/templates/FieldFallbackDemo/DefaultTemplatesDemoFolder"/>
 
       <!-- Location of the default items that will be created after the templates are created-->
-      <setting name="Fallback.Default.Item.Location" value ="/sitecore/Content/FieldFallbackDemo/DefaultItemsDemoFolder"/>
-      
+      <setting name="Fallback.Default.Item.Location" value ="/sitecore/content/FieldFallbackDemo/DefaultItemsDemoFolder"/>
+
       <!-- Database to process events in-->
       <setting name="Database" value="master"/>
-      
+
       <!-- Fallback Defaults Folder Template ItemID-->
       <setting name="Fallback.Defaults.Folder.ID" value="{01EDFB94-C2E5-4E9E-8CF7-C1A50F5D7331}"/>
     </settings>
