@@ -172,7 +172,6 @@
     <Compile Include="DefaultFieldFallbackProcessor.cs" />
     <Compile Include="DefaultValuesFallbackProcessor.cs" />
     <Compile Include="Events\FieldFallBackItemCreatedHandler.cs" />
-    <Compile Include="Events\FieldFallBackItemDeletedHandler.cs" />
     <Compile Include="Extensions\ItemExtension.cs" />
     <Compile Include="LateralFieldFallbackProcessor.cs" />
     <Compile Include="Pipeline\DeleteItems.cs" />
