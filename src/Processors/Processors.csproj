@@ -175,6 +175,7 @@
     <Compile Include="Events\FieldFallBackItemDeletedHandler.cs" />
     <Compile Include="Extensions\ItemExtension.cs" />
     <Compile Include="LateralFieldFallbackProcessor.cs" />
+    <Compile Include="Pipeline\DeleteItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
