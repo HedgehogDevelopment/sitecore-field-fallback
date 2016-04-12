@@ -26,7 +26,7 @@ namespace FieldFallback.Processors
             {
                 // get the value of the default item.
                 // Standard Values are an acceptable value!
-                return fallbackItem.Fields[args.Field.ID].GetValueSafe(true, false, false);
+                return fallbackItem.Fields[args.Field.ID].GetValueSafe(false, false, false);
             }
             return null;
         }
