@@ -1,8 +1,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. General Fallback", "02. General Fallback", "{2B3D124A-AB61-411E-B2A0-AACB4BBDB224}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Language Fallback", "03. Language Fallback", "{331B2DC2-D515-42EB-9FD9-D2C7A3CB9658}"
 EndProject
@@ -31,6 +34,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04. Demo", "04. Demo", "{22476521-D59B-43DB-BFE5-0D4ED25855F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Web", "Demo.Web\Demo.Web.csproj", "{CC55891F-E4DE-4EBD-9A01-0F4498E49FCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tds", ".tds", "{82477168-C91B-4DEA-BBFB-0FE78B4900CC}"
+	ProjectSection(SolutionItems) = preProject
+		TdsGlobal.config.user = TdsGlobal.config.user
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
