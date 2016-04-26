@@ -21,7 +21,7 @@ namespace FieldFallback.Processors.Events
     ///     delay to create the item to ensure the SaveUI
     ///     Pipeline has time to process saving the TemplateItem
     /// </summary>
-    public class FieldFallBackItemCreatedHandler
+    public class DefaultValuesItemCreatedHandler
     {
         /// <summary>
         ///     Raises the item saved event.
@@ -114,7 +114,7 @@ namespace FieldFallback.Processors.Events
 
                 parentItem.Editing.BeginEdit();
 
-                string newItemName = item.Name + Config.ContentItemSuffix;
+                string newItemName = item.Name + DefaultValuesConfig.ContentItemSuffix;
 
                 // Create a new item based off of the template 
                 // just created     
@@ -127,7 +127,7 @@ namespace FieldFallback.Processors.Events
                 else if (item.IsFolderTemplate())
                 {
                     //Get the base folder template
-                    TemplateItem template = item.Database.GetItem(Config.FallbackDefaultsFolderID);
+                    TemplateItem template = item.Database.GetItem(DefaultValuesConfig.FallbackDefaultsFolderID);
                     parentItem.Add(item.Name, template);
                 }
 

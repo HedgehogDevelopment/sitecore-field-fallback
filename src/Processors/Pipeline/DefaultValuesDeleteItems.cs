@@ -16,9 +16,8 @@ namespace FieldFallback.Processors.Pipeline
     /// <summary>
     ///     This Pipeline Deletes Default Content Item.
     /// </summary>
-    public class DeleteItems
+    public class DefaultValuesDeleteItems
     {
-        private Item _itemToDelete;
 
         /// <summary>
         ///     Process the delete items described by args.
@@ -26,18 +25,15 @@ namespace FieldFallback.Processors.Pipeline
         /// <param name="args"> The arguments. </param>
         public void ProcessDeleteItems(ClientPipelineArgs args)
         {
-            if (!IsFallbackDefaultTemplate(args))
+            Item itemToDelete = GetItemToDelete(args);
+
+            if (itemToDelete == null)
             {
                 return;
             }
 
-            if (_itemToDelete == null)
-            {
-                return;
-            }
-
-            Assert.IsNotNull(_itemToDelete, "Template Item Deleting");
-            ItemLink[] referrerItemLinks = Globals.LinkDatabase.GetReferrers(_itemToDelete);
+            Assert.IsNotNull(itemToDelete, "Template Item Deleting");
+            ItemLink[] referrerItemLinks = Globals.LinkDatabase.GetReferrers(itemToDelete);
             if (referrerItemLinks.Count() > 2)
             {
                 Assert.IsFalse(false, "Default Template Item Delete has child items", args);
@@ -54,9 +50,9 @@ namespace FieldFallback.Processors.Pipeline
                 }
 
                 // If the referrer item is in the Defaults path, we need to delete it
-                if (referrerItem.Paths.Path.StartsWith(Config.DefaultItemLocation))
+                if (referrerItem.Paths.Path.StartsWith(DefaultValuesConfig.DefaultItemLocation))
                 {
-                    RecyleOrDeleteItem(referrerItem);
+                    RecycleOrDeleteItem(referrerItem);
                 }
             }
         }
@@ -66,7 +62,7 @@ namespace FieldFallback.Processors.Pipeline
         /// </summary>
         /// </remarks>
         /// <param name="referrerItem"> The referrer item. </param>
-        private void RecyleOrDeleteItem(Item referrerItem)
+        private void RecycleOrDeleteItem(Item referrerItem)
         {
             if (Settings.RecycleBinActive)
             {
@@ -90,20 +86,13 @@ namespace FieldFallback.Processors.Pipeline
         /// <returns>
         ///     true if fallback default template, false if not.
         /// </returns>
-        public bool IsFallbackDefaultTemplate(ClientPipelineArgs args)
+        public Item GetItemToDelete(ClientPipelineArgs args)
         {
             Assert.ArgumentNotNull(args, "args");
             List<Item> items = GetItems(args) as List<Item>;
 
-            foreach (
-                Item current in items.Where(current => current.Paths.Path.StartsWith(Config.DefaultTemplateLocation)))
-            {
-                // If we have found the Template Item in our Default Template
-                // Path, set the property
-                _itemToDelete = current;
-                return true;
-            }
-            return false;
+            return items.FirstOrDefault(current => current.Paths.Path
+                                .StartsWith(DefaultValuesConfig.DefaultTemplateLocation));
         }
 
         /// <summary>

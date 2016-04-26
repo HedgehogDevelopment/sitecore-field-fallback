@@ -3,7 +3,7 @@ using Sitecore.Data.Items;
 
 namespace FieldFallback.Processors.Configuration
 {
-    public class Config
+    public class DefaultValuesConfig
     {
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace FieldFallback.Processors.Configuration
 
         public static string Database
         {
-            get { return Settings.GetSetting("Database"); }
+            get { return Settings.GetSetting("Fallback.Default.Database"); }
         }
         /// <summary>
         ///     Gets the content item suffix that will be used when creating
@@ -59,7 +59,7 @@ namespace FieldFallback.Processors.Configuration
 
         public static string ContentItemSuffix
         {
-            get { return " Defaults"; }
+            get { return Settings.GetSetting("Fallback.Default.ContentItemSuffix"); }
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace FieldFallback.Processors.Configuration
 
         public static string FallbackDefaultsFolderID
         {
-            get { return Settings.GetSetting("Fallback.Defaults.Folder.ID"); }
+            get { return Settings.GetSetting("Fallback.Default.Folder.ID"); }
         }
     }
 }
