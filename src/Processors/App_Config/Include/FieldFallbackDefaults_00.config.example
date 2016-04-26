@@ -2,13 +2,13 @@
   <sitecore>
     <events>
       <event name="item:created">
-        <handler type="FieldFallback.Processors.Events.FieldFallBackItemCreatedHandler, FieldFallback.Processors" method="OnItemSaved">
+        <handler type="FieldFallback.Processors.Events.DefaultValuesItemCreatedHandler, FieldFallback.Processors" method="OnItemSaved">
         </handler>
       </event>
     </events>
     <processors>
       <uiDeleteItems>
-        <processor 	type="FieldFallback.Processors.Pipeline.DeleteItems,FieldFallback.Processors" method="ProcessDeleteItems"
+        <processor 	type="FieldFallback.Processors.Pipeline.DefaultFieldDeleteItems,FieldFallback.Processors" method="ProcessDeleteItems"
 					patch:before="processor[@type='Sitecore.Shell.Framework.Pipelines.DeleteItems,Sitecore.Kernel' and @method='CheckTemplateLinks']"/>
       </uiDeleteItems>
     </processors>
@@ -21,10 +21,13 @@
       <setting name="Fallback.Default.Item.Location" value ="/sitecore/content/FieldFallbackDemo/DefaultItemsDemoFolder"/>
 
       <!-- Database to process events in-->
-      <setting name="Database" value="master"/>
+      <setting name="Fallback.Default.Database" value="master"/>
+
+      <!-- Text to append to end of the name of the Default Item being created-->
+      <setting name="Fallback.Default.ContentItemSuffix" value=" Defaults"/>
 
       <!-- Fallback Defaults Folder Template ItemID-->
-      <setting name="Fallback.Defaults.Folder.ID" value="{01EDFB94-C2E5-4E9E-8CF7-C1A50F5D7331}"/>
+      <setting name="Fallback.Default.Folder.ID" value="{01EDFB94-C2E5-4E9E-8CF7-C1A50F5D7331}"/>
     </settings>
   </sitecore>
 </configuration>
