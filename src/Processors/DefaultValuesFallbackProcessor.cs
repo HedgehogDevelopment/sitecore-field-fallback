@@ -25,7 +25,6 @@ namespace FieldFallback.Processors
             if (fallbackItem != null && fallbackItem.Fields[args.Field.ID] != null)
             {
                 // get the value of the default item.
-                // Standard Values are an acceptable value!
                 return fallbackItem.Fields[args.Field.ID].GetValueSafe(false, false, false);
             }
             return null;
