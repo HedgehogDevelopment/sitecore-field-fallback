@@ -115,7 +115,8 @@ namespace FieldFallback.Processors.Pipeline
             Assert.IsNotNull(database, typeof(Database), "Name: {0}", args.Parameters["database"]);
 
             ListString listString = new ListString(args.Parameters["items"], '|');
-            return listString.Select(current => database.GetItem(current));
+
+            return listString.Select(id => database.GetItem(id)).ToList();
         }
     }
 }
