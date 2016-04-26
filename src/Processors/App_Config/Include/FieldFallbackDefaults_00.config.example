@@ -8,7 +8,7 @@
     </events>
     <processors>
       <uiDeleteItems>
-        <processor 	type="FieldFallback.Processors.Pipeline.DefaultFieldDeleteItems,FieldFallback.Processors" method="ProcessDeleteItems"
+        <processor 	type="FieldFallback.Processors.Pipeline.DefaultValuesDeleteItems,FieldFallback.Processors" method="ProcessDeleteItems"
 					patch:before="processor[@type='Sitecore.Shell.Framework.Pipelines.DeleteItems,Sitecore.Kernel' and @method='CheckTemplateLinks']"/>
       </uiDeleteItems>
     </processors>
