@@ -166,15 +166,15 @@
     </Compile>
     <Compile Include="AncestorFallbackProcessor.cs" />
     <Compile Include="Caching\FallbackValuesCache.cs" />
-    <Compile Include="Configuration\Config.cs" />
+    <Compile Include="Configuration\DefaultValuesConfig.cs" />
     <Compile Include="Data\Fields\TemplateFallbackFieldItem.cs" />
     <Compile Include="Data\Items\FallbackItem.cs" />
     <Compile Include="DefaultFieldFallbackProcessor.cs" />
     <Compile Include="DefaultValuesFallbackProcessor.cs" />
-    <Compile Include="Events\FieldFallBackItemCreatedHandler.cs" />
-    <Compile Include="Extensions\ItemExtension.cs" />
+    <Compile Include="Events\DefaultValuesItemCreatedHandler.cs" />
+    <Compile Include="Data\Items\DefaultValuesItem.cs" />
     <Compile Include="LateralFieldFallbackProcessor.cs" />
-    <Compile Include="Pipeline\DeleteItems.cs" />
+    <Compile Include="Pipeline\DefaultValuesDeleteItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\FieldFallbackDefaults_00.config.example" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

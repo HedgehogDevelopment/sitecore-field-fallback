@@ -1,5 +1,5 @@
 ﻿using FieldFallback.Pipelines.FieldFallbackPipeline;
-using FieldFallback.Processors.Extensions;
+using FieldFallback.Processors.Data.Items;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -35,7 +35,7 @@ namespace FieldFallback.Processors
             using (new SecurityDisabler())
             {
                 TemplateItem currentTemplate = field.Database.GetTemplate(field.Item.TemplateID);
-                return field.Database.GetItem(currentTemplate.GetFullContentItemPath());
+                return field.Database.GetItem(DefaultValuesItem.GetFullContentItemPath(currentTemplate));
             }
         }
     }

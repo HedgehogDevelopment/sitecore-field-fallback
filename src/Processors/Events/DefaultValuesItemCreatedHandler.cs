@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using FieldFallback.Processors.Configuration;
-using FieldFallback.Processors.Extensions;
+using FieldFallback.Processors.Data.Items;
 using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
@@ -53,7 +53,7 @@ namespace FieldFallback.Processors.Events
 
             // Validate that the item is in the database
             // that is configured 
-            if (!item.IsInConfigDatabase())
+            if (!DefaultValuesItem.IsInConfigDatabase(item))
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace FieldFallback.Processors.Events
             // Check to see that the item is a template
             // If it is not a template, we do not need to 
             // process it.
-            if (!(item.IsTemplate() || item.IsFolderTemplate()))
+            if (!(DefaultValuesItem.IsTemplate(item) || DefaultValuesItem.IsFolderTemplate(item)))
             {
                 return;
             }
@@ -69,7 +69,7 @@ namespace FieldFallback.Processors.Events
             //If our new item is in our default template location,
             // we are creating a template. Since we are creating a template,
             // we need to create a default item to match it.
-            if (item.IsInItemTemplatePath())
+            if (DefaultValuesItem.IsInItemTemplatePath(item))
             {
                 // We are creating the new item in a new thread
                 // This allows the Template time create and save
@@ -105,7 +105,7 @@ namespace FieldFallback.Processors.Events
                 Database context = item.Database;
 
                 //Get the parent item of the item we need to create
-                Item parentItem = context.Items.GetItem(item.GetDefaultContentPath());
+                Item parentItem = context.Items.GetItem(DefaultValuesItem.GetDefaultContentPath(item));
 
                 if (parentItem == null)
                 {
@@ -118,13 +118,13 @@ namespace FieldFallback.Processors.Events
 
                 // Create a new item based off of the template 
                 // just created     
-                if (item.IsTemplate())
+                if (DefaultValuesItem.IsTemplate(item))
                 {
                     //Get the template to base the template 
                     TemplateItem template = item.Database.GetTemplate(item.ID);
                     parentItem.Add(newItemName, template);
                 }
-                else if (item.IsFolderTemplate())
+                else if (DefaultValuesItem.IsFolderTemplate(item))
                 {
                     //Get the base folder template
                     TemplateItem template = item.Database.GetItem(DefaultValuesConfig.FallbackDefaultsFolderID);
