@@ -34,8 +34,7 @@ namespace FieldFallback.Processors
         {
             using (new SecurityDisabler())
             {
-                TemplateItem currentTemplate = field.Database.GetTemplate(field.Item.TemplateID);
-                return field.Database.GetItem(DefaultValuesItem.GetFullContentItemPath(currentTemplate));
+                return field.Item;
             }
         }
     }
