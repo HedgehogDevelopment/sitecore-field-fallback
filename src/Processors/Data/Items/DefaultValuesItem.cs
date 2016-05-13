@@ -4,14 +4,14 @@ using Sitecore.Data.Items;
 
 namespace FieldFallback.Processors.Data.Items
 {
-    public static class DefaultValuesItem
+    public class DefaultValuesItem : CustomItemBase
     {
-        public static string GetFullContentItemPath(TemplateItem item)
+        public string GetFullContentItemPath(TemplateItem item)
         {
             // Path of content item dynamically created by 
             // FieldFallback Processor Event
             string itemPath = string.Format("{0}/{1}{2}",
-                GetDefaultContentPath(item),
+                GetDefaultContentPath(),
                 item.Name,
                 DefaultValuesConfig.ContentItemSuffix);
 
@@ -27,10 +27,10 @@ namespace FieldFallback.Processors.Data.Items
         ///     The parent content path of the item that
         ///     is going to be created.
         /// </returns>
-        public static string GetDefaultContentPath(Item item)
+        public string GetDefaultContentPath()
         {
             string itemPath =
-                item.Paths.ParentPath
+                InnerItem.Paths.ParentPath
                     //Remove the template path
                     .Substring(DefaultValuesConfig.DefaultTemplateLocation.Length)
                     //Insert the item location
@@ -50,27 +50,31 @@ namespace FieldFallback.Processors.Data.Items
         ///     true if the item is a TemplateItem or TemplateFolder, 
         ///     false if it is not.
         /// </returns>
-        public static bool IsTemplate(Item item)
+        public bool IsTemplate()
         {
             //Check if item it a TemplateItem
-            return item.TemplateID.ToString() == TemplateIDs.Template.ToString();
+            return this.InnerItem.TemplateID.ToString() == TemplateIDs.Template.ToString();
         }
 
-        public static bool IsFolderTemplate(Item item)
+        public bool IsFolderTemplate()
         {
             //Check if item it a TemplateFolder
-            return item.TemplateID.ToString() == TemplateIDs.TemplateFolder.ToString();
+            return this.InnerItem.TemplateID.ToString() == TemplateIDs.TemplateFolder.ToString();
         }
 
-        public static bool IsInConfigDatabase(Item item)
+        public bool IsInConfigDatabase()
         {
-            return DefaultValuesConfig.Database == item.Database.Name;
+            return DefaultValuesConfig.Database == this.Database.Name;
         }
 
-        public static bool IsInItemTemplatePath(Item item)
+        public bool IsInItemTemplatePath()
         {
-            return item.Paths.FullPath.ToLower()
+            return this.InnerItem.Paths.FullPath.ToLower()
                 .Contains(DefaultValuesConfig.DefaultTemplateLocation.ToLower());
+        }
+
+        public DefaultValuesItem(Item innerItem) : base(innerItem)
+        {
         }
     }
 }
