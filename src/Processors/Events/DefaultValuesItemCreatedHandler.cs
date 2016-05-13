@@ -48,12 +48,12 @@ namespace FieldFallback.Processors.Events
                 return;
             }
 
-            Item item = eventArgs.Item;
+            DefaultValuesItem item = new DefaultValuesItem(eventArgs.Item);
             Assert.IsNotNull(item, "item");
 
             // Validate that the item is in the database
             // that is configured 
-            if (!DefaultValuesItem.IsInConfigDatabase(item))
+            if (!item.IsInConfigDatabase())
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace FieldFallback.Processors.Events
             // Check to see that the item is a template
             // If it is not a template, we do not need to 
             // process it.
-            if (!(DefaultValuesItem.IsTemplate(item) || DefaultValuesItem.IsFolderTemplate(item)))
+            if (!(item.IsTemplate() || item.IsFolderTemplate()))
             {
                 return;
             }
@@ -69,7 +69,7 @@ namespace FieldFallback.Processors.Events
             //If our new item is in our default template location,
             // we are creating a template. Since we are creating a template,
             // we need to create a default item to match it.
-            if (DefaultValuesItem.IsInItemTemplatePath(item))
+            if (item.IsInItemTemplatePath())
             {
                 // We are creating the new item in a new thread
                 // This allows the Template time create and save
@@ -95,7 +95,7 @@ namespace FieldFallback.Processors.Events
         /// <param name="item">
         ///     The TemplateItem that was just created.
         /// </param>
-        private void CreateContentItem(Item item)
+        private void CreateContentItem(DefaultValuesItem item)
         {
             //Create a new item in the item location based off of the template
             //that was just created. 
@@ -105,7 +105,7 @@ namespace FieldFallback.Processors.Events
                 Database context = item.Database;
 
                 //Get the parent item of the item we need to create
-                Item parentItem = context.Items.GetItem(DefaultValuesItem.GetDefaultContentPath(item));
+                Item parentItem = context.Items.GetItem(item.GetDefaultContentPath());
 
                 if (parentItem == null)
                 {
@@ -118,13 +118,13 @@ namespace FieldFallback.Processors.Events
 
                 // Create a new item based off of the template 
                 // just created     
-                if (DefaultValuesItem.IsTemplate(item))
+                if (item.IsTemplate())
                 {
                     //Get the template to base the template 
                     TemplateItem template = item.Database.GetTemplate(item.ID);
                     parentItem.Add(newItemName, template);
                 }
-                else if (DefaultValuesItem.IsFolderTemplate(item))
+                else if (item.IsFolderTemplate())
                 {
                     //Get the base folder template
                     TemplateItem template = item.Database.GetItem(DefaultValuesConfig.FallbackDefaultsFolderID);
