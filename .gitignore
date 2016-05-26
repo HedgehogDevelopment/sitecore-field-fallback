@@ -179,3 +179,4 @@ lib/Sitecore*.dll
 !/release/
 src/packages/Sitecore.6.5.0.120706/Sitecore.6.5.0.120706.nupkg
 src/packages/Sitecore.6.5.0.120706/tools/install.ps1
+src/.vs/config/applicationhost.config
