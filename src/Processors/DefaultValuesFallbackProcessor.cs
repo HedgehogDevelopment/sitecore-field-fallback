@@ -30,11 +30,16 @@ namespace FieldFallback.Processors
             return null;
         }
 
-        private Item GetFallbackItem(Field field)
+        protected Item GetFallbackItem(Field field)
         {
             using (new SecurityDisabler())
             {
-                return field.Item;
+                TemplateItem currentTemplate = field.Database.GetTemplate(field.Item.TemplateID);
+
+                //Get the item from the database so we have the correct item
+                DefaultValuesItem contentPath = new DefaultValuesItem(field.Item);
+                
+                return field.Database.GetItem(contentPath.GetFullContentItemPath(currentTemplate));
             }
         }
     }
