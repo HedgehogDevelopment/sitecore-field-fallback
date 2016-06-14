@@ -6,6 +6,10 @@ namespace FieldFallback.Processors.Data.Items
 {
     public class DefaultValuesItem : CustomItemBase
     {
+        public DefaultValuesItem(Item innerItem) : base(innerItem)
+        {
+        }
+
         public string GetFullContentItemPath(TemplateItem item)
         {
             // Path of content item dynamically created by 
@@ -71,10 +75,6 @@ namespace FieldFallback.Processors.Data.Items
         {
             return this.InnerItem.Paths.FullPath.ToLower()
                 .Contains(DefaultValuesConfig.DefaultTemplateLocation.ToLower());
-        }
-
-        public DefaultValuesItem(Item innerItem) : base(innerItem)
-        {
         }
     }
 }
