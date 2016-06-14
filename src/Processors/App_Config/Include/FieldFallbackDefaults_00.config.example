@@ -17,7 +17,7 @@
       <!-- Location of default templates that are used by the Fallback Items-->
       <setting name="Fallback.Default.Template.Location" value ="/sitecore/templates/FieldFallbackDemo/DefaultTemplatesDemoFolder"/>
 
-      <!-- Location of the default items that will be created after the templates are created-->
+      <!-- Location of the default items that will be automatically created after the templates are created-->
       <setting name="Fallback.Default.Item.Location" value ="/sitecore/content/FieldFallbackDemo/DefaultItemsDemoFolder"/>
 
       <!-- Database to process events in-->
