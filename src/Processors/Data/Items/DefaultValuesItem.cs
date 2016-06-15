@@ -33,12 +33,7 @@ namespace FieldFallback.Processors.Data.Items
         /// </returns>
         public string GetDefaultContentPath()
         {
-            string itemPath =
-                InnerItem.Paths.ParentPath
-                    //Remove the template path
-                    .Substring(DefaultValuesConfig.DefaultTemplateLocation.Length)
-                    //Insert the item location
-                    .Insert(0, DefaultValuesConfig.DefaultItemLocation);
+            string itemPath = DefaultValuesConfig.DefaultItemLocation;
 
             return itemPath;
         }
