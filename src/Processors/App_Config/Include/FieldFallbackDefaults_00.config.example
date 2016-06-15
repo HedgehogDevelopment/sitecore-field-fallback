@@ -26,7 +26,7 @@
       <!-- Text to append to end of the name of the Default Item being created-->
       <setting name="Fallback.Default.ContentItemSuffix" value=" Defaults"/>
 
-      <!-- Fallback Defaults Folder Template ItemID-->
+      <!-- Fallback Defaults Folder Item ID-->
       <setting name="Fallback.Default.Folder.ID" value="{01EDFB94-C2E5-4E9E-8CF7-C1A50F5D7331}"/>
     </settings>
   </sitecore>
