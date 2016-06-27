@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {4328FA62-B0B8-4410-8ECA-8616D5487926}
+database: master
+path: /sitecore/templates/FieldFallbackDemo/DefaultTemplatesDemoFolder
+parent: {FCB3EB2F-2EAE-45E0-9653-5CC9DF7F114B}
+name: DefaultTemplatesDemoFolder
+master: {00000000-0000-0000-0000-000000000000}
+template: {0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}
+templatekey: Template Folder
+
