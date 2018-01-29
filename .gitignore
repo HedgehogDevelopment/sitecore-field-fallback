@@ -43,6 +43,8 @@ local.properties
 *.user
 *.sln.docstates
 
+[Pp]ackages/
+
 # Build results
 [Dd]ebug/
 [Rr]elease/

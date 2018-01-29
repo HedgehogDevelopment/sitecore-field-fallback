@@ -231,6 +231,7 @@
     </SitecoreItem>
     <SitecoreItem Include="sitecore\media library\Images\cat.item">
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\templates.item">
       <Icon>/temp/IconCache/Applications/16x16/form_blue.png</Icon>
@@ -395,6 +396,7 @@
     </SitecoreItem>
     <SitecoreItem Include="sitecore\templates\System\Media\Unversioned\File\Information\Title.item">
       <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
   </ItemGroup>
   <ItemGroup>
@@ -406,7 +408,7 @@
       <Name>Demo.Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" Condition="Exists('$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets')" />
   <!-- After the package is generated, copy it up to the /trunk/release directory -->
   <Target Name="AfterGeneratePackage" Condition=" '$(Configuration)' == 'Release' ">
     <PropertyGroup>

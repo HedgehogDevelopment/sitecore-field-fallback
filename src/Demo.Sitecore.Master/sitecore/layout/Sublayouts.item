@@ -8,6 +8,7 @@ name: Sublayouts
 master: {00000000-0000-0000-0000-000000000000}
 template: {239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}
 templatekey: Node
+created: 20171219T153530Z
 
 ----field----
 field: {A0CB3965-8884-4C7A-8815-B6B2E5CED162}
@@ -27,9 +28,9 @@ Software/16x16/elements_selection.png
 field: {9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}
 name: __Read Only
 key: __read only
-content-length: 1
+content-length: 0
 
-1
+
 ----field----
 field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
 name: __Masters
@@ -47,22 +48,22 @@ ar|sitecore\Designer|pd|+item:delete|+item:create|+item:rename|+item:read|+item:
 ----version----
 language: da
 version: 1
-revision: e18bb966-954e-4a55-95a0-f5451d3da3d6
+revision: 6ec6b567-4beb-49b8-87bc-ffa6cb021f93
 
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
 name: __Display name
 key: __display name
-content-length: 10
+content-length: 9
 
-Sublayouts
+Sublayout
 ----field----
 field: {9541E67D-CE8C-4225-803D-33F7F29F09EF}
 name: __Short description
 key: __short description
-content-length: 22
+content-length: 21
 
-Sublayout renderinger.
+Sublayoutrenderinger.
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -74,9 +75,9 @@ sitecore\admin
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
-content-length: 34
+content-length: 16
 
-20120622T121254:634759639740457066
+20171219T155427Z
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -90,14 +91,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-e18bb966-954e-4a55-95a0-f5451d3da3d6
+6ec6b567-4beb-49b8-87bc-ffa6cb021f93
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20120622T121254:634759639741238521
+20171219T155427Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
@@ -108,7 +109,7 @@ sitecore\admin
 ----version----
 language: de-DE
 version: 1
-revision: 5aa72f3d-4bd2-4724-8058-28d1449b7349
+revision: 2e202b16-7e19-43b3-9715-2d6d77c6a2fb
 
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
@@ -135,9 +136,9 @@ sitecore\admin
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
-content-length: 34
+content-length: 16
 
-20120622T123158:634759651180149081
+20171219T155909Z
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -151,14 +152,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-5aa72f3d-4bd2-4724-8058-28d1449b7349
+2e202b16-7e19-43b3-9715-2d6d77c6a2fb
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20120622T123158:634759651180617876
+20171219T155909Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
@@ -169,7 +170,7 @@ sitecore\admin
 ----version----
 language: en
 version: 1
-revision: 00e4f81a-7ae9-4db5-a43f-66ab43381443
+revision: 7b8c3206-51c5-4847-8777-1c0df948fdcd
 
 ----field----
 field: {9541E67D-CE8C-4225-803D-33F7F29F09EF}
@@ -179,12 +180,19 @@ content-length: 21
 
 Sublayout renderings.
 ----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
-content-length: 34
+content-length: 16
 
-20080417T173345:633440504256165504
+20080417T143345Z
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -198,25 +206,25 @@ name: __Revision
 key: __revision
 content-length: 36
 
-00e4f81a-7ae9-4db5-a43f-66ab43381443
+7b8c3206-51c5-4847-8777-1c0df948fdcd
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20081106T181252:633615919723125000
+20170405T105320Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
 content-length: 14
 
-sitecore\admin
+sitecore\Admin
 ----version----
 language: ja-JP
 version: 1
-revision: 83a76734-9d55-492a-9c6a-ce6ec39b6ba2
+revision: 8e16ff0d-0818-4686-bc2a-3dcee089f7e9
 
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
@@ -243,9 +251,9 @@ sitecore\admin
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
-content-length: 34
+content-length: 16
 
-20120622T125509:634759665090364839
+20171219T160329Z
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -259,14 +267,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-83a76734-9d55-492a-9c6a-ce6ec39b6ba2
+8e16ff0d-0818-4686-bc2a-3dcee089f7e9
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20120622T125509:634759665094895538
+20171219T160329Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

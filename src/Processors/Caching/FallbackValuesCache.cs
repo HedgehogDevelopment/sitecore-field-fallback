@@ -37,7 +37,7 @@ namespace FieldFallback.Processors.Caching
         {
             // With the LateralFieldFallbackProcessor, we need to clear that cache of a field that references this field too.
             FallbackItem fieldItem = item;
-            
+
             if (fieldItem != null && fieldItem.HasLateralFallback)
             {
                 List<ID> fieldsThatFallbackToMe = fieldItem.GetFieldsThatFallbackTo(item.Fields[fieldID]).ToList();
@@ -46,13 +46,13 @@ namespace FieldFallback.Processors.Caching
                     Remove(GetFieldKey(item, v));
                 }
             }
-            
+
 
             if (ClearChildEntries)
             {
                 // we need to clear all child items that have this field
                 // get cache keys for all items in this subtree
-                List<string> keys = base.InnerCache.GetCacheKeys(GetGeneralItemKeyPrefix(item)).Cast<string>().ToList();
+                List<string> keys = base.InnerCache.GetCacheKeys().Where(k => k.StartsWith(GetGeneralItemKeyPrefix(item))).ToList();
                 string sfieldID = fieldID.ToString();
                 foreach (string key in keys)
                 {
@@ -69,6 +69,6 @@ namespace FieldFallback.Processors.Caching
             }
         }
 
-        
+
     }
 }

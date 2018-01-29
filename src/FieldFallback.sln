@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. General Fallback", "02. General Fallback", "{2B3D124A-AB61-411E-B2A0-AACB4BBDB224}"
 EndProject
@@ -65,15 +65,9 @@ Global
 		{219E8827-FEED-4E49-8B84-4A59FC7222B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{219E8827-FEED-4E49-8B84-4A59FC7222B2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{92D0726A-D10A-4B6C-A98B-404A2EE88BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92D0726A-D10A-4B6C-A98B-404A2EE88BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92D0726A-D10A-4B6C-A98B-404A2EE88BCC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{92D0726A-D10A-4B6C-A98B-404A2EE88BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92D0726A-D10A-4B6C-A98B-404A2EE88BCC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92D0726A-D10A-4B6C-A98B-404A2EE88BCC}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{CC55891F-E4DE-4EBD-9A01-0F4498E49FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC55891F-E4DE-4EBD-9A01-0F4498E49FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC55891F-E4DE-4EBD-9A01-0F4498E49FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC55891F-E4DE-4EBD-9A01-0F4498E49FCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,5 +81,8 @@ Global
 		{219E8827-FEED-4E49-8B84-4A59FC7222B2} = {E46230F7-8EC4-4396-A551-0ADDFBB8126A}
 		{92D0726A-D10A-4B6C-A98B-404A2EE88BCC} = {22476521-D59B-43DB-BFE5-0D4ED25855F8}
 		{CC55891F-E4DE-4EBD-9A01-0F4498E49FCF} = {22476521-D59B-43DB-BFE5-0D4ED25855F8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {288AE5EE-2A96-482D-8489-090132A63028}
 	EndGlobalSection
 EndGlobal

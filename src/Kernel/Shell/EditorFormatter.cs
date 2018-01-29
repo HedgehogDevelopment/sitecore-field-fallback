@@ -156,7 +156,7 @@ namespace FieldFallback.Shell
                     str4 = " title=\"" + itemField.Description + "\"";
                 }
                 string str5 = "scEditorFieldLabel";
-                if ((UserOptions.View.UseSmartTags && !readOnly) && !UserOptions.ContentEditor.ShowRawValues)
+                if (!readOnly && !UserOptions.ContentEditor.ShowRawValues)
                 {
                     Item item2 = fieldType.Children["Menu"];
                     if (item2 != null)
