@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
 using FieldFallback.Caching;
 using FieldFallback.Configuration;
@@ -17,7 +16,6 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
 using Sitecore.Globalization;
-using Sitecore.Publishing;
 
 namespace FieldFallback.Data
 {
@@ -85,6 +83,7 @@ namespace FieldFallback.Data
         }
 
         static bool _initializingFallback;
+        static bool _fallbackInitialized;
         static object _fallbackInitLock = new object();
 
         public override void Initialize(string name, NameValueCollection config)
@@ -95,29 +94,34 @@ namespace FieldFallback.Data
             {
                 return;
             }
-            if (!_initializingFallback)
+
+            if (!_initializingFallback && !_fallbackInitialized)
             {
                 lock (_fallbackInitLock)
                 {
-                    if (!_initializingFallback)
+                    if (!_initializingFallback && !_fallbackInitialized)
                     {
                         try
                         {
+                            Log.Info("Starting field fallback initialization", this);
+
                             _initializingFallback = true;
 
                             EnableDatabases();
 
                             EnableSites();
+
+                            _fallbackInitialized = true;
+
+                            Log.Info("Field fallback initialization complete", this);
                         }
                         finally
                         {
                             _initializingFallback = false;
                         }
                     }
-                    
                 }
             }
-            
         }
 
         /// <summary>
@@ -260,6 +264,11 @@ namespace FieldFallback.Data
                 return false;
             }
 
+            if (!_fallbackInitialized)
+            {
+                return false;
+            }
+
             Assert.ArgumentNotNull(field, "field");
 
             if (IsIgnoredField(field))
@@ -354,7 +363,7 @@ namespace FieldFallback.Data
             string itemPath = item.Paths.Path.ToLower();
 
             // `item.Paths.IsContentItem` is what we can use, but again, this will walk up the tree each time
-            bool isContentOrMediaItem = itemPath.StartsWith("/sitecore/content/", StringComparison.OrdinalIgnoreCase) 
+            bool isContentOrMediaItem = itemPath.StartsWith("/sitecore/content/", StringComparison.OrdinalIgnoreCase)
                                         || itemPath.StartsWith("/sitecore/media library/", StringComparison.OrdinalIgnoreCase);
 
             // the item must be a content or media item.
@@ -555,7 +564,7 @@ namespace FieldFallback.Data
         private void OnPublishEndRemoteHandled(object sender, EventArgs args)
         {
             PublishEndRemoteEventArgs remoteArgs = args as PublishEndRemoteEventArgs;
-            
+
             bool deep = remoteArgs.Deep;
             ID rootItemID = ID.Parse(remoteArgs.RootItemId);
 
